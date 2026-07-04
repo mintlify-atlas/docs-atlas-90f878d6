@@ -1,7 +1,7 @@
 ---
 title: "Build an Opening Package Manually with Project Forge"
 sidebarTitle: "Manual"
-description: "Fill the Project Forge artifact templates yourself for maximum control over scope, sources, constraints, and expected outputs when your project is small or already clear."
+description: "Fill the Project Forge templates yourself when the project is small or well-understood, keeping full control over scope, sources, and required outputs."
 ---
 
 The manual method puts every decision directly in your hands. Instead of using an AI session or the web compiler to guide the process, you open the template files, fill in the fields, and produce the opening package yourself. This approach is best when the project is already well-understood and you want exact control over what enters each artifact.
@@ -24,11 +24,11 @@ The template files live in the `artifact_templates/` directory of the Project Fo
 
 | Template file | Purpose |
 |---|---|
-| `ENTRY_POINT.md` | Configures how the target project reads the opening package |
-| `TARGET_PROJECT_BRIEF_ARTIFACT.template.md` | Defines objective, scope, required outputs, and project-specific constraints |
-| `INITIAL_SSOT_ARTIFACT.template.md` | Freezes the initial official basis: approved materials, sources, and base constraints |
-| `HANDOFF_ARTIFACT.template.md` | Transfers current run state when continuity cannot be reconstructed safely |
-| `SOURCE_OR_MATERIAL_TRANSFER_ARTIFACT.template.md` | Carries candidate materials to the target project without promoting them to official basis |
+| `artifact_templates/ENTRY_POINT.md` | Configures how the target project reads the opening package |
+| `artifact_templates/TARGET_PROJECT_BRIEF_ARTIFACT.template.md` | Defines objective, scope, required outputs, and project-specific constraints |
+| `artifact_templates/INITIAL_SSOT_ARTIFACT.template.md` | Freezes the initial official basis: approved materials, sources, and base constraints |
+| `artifact_templates/HANDOFF_ARTIFACT.template.md` | Transfers current run state when continuity cannot be reconstructed safely |
+| `artifact_templates/SOURCE_OR_MATERIAL_TRANSFER_ARTIFACT.template.md` | Carries candidate materials to the target project without promoting them to official basis |
 
 The templates are startup surfaces only. They help you cover required fields and stay close to the artifact grammar. They do not create authority by themselves — authority still comes from the canonicals.
 

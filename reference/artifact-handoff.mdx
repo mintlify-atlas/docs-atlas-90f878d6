@@ -59,6 +59,10 @@ Read when reopening the immediately following run. Do not carry it beyond that r
 
 Valid only for the immediately following run unless explicitly renewed. A handoff artifact that has not been renewed is stale and should not be treated as current state.
 
+## Promotion conditions
+
+Never promotable to canonical or SSOT. HANDOFF_ARTIFACT is temporary and subordinate only — it may carry operational state for one run transition and no further.
+
 ## Template
 
 ```markdown

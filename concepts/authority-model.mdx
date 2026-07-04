@@ -1,7 +1,7 @@
 ---
 title: "Authority Model: How Project Forge Resolves Conflicts"
 sidebarTitle: "Authority Model"
-description: "Every surface in Project Forge carries a defined authority level. Conflict resolution, runtime overrides, and peer divergence all follow from this hierarchy."
+description: "Every surface in Project Forge carries a defined authority level. Conflict resolution, runtime overrides, and peer divergence all follow from this model."
 ---
 
 Every surface in Project Forge has a defined authority level, and no lower surface may overrule a higher one. This hierarchy is not a convention — it is the mechanism the system uses to close conflicts, reject invalid overrides, and prevent lower-surface material from quietly redefining decisions that were already made above. Understanding the authority model is the prerequisite for understanding how every other part of the system behaves under pressure.
