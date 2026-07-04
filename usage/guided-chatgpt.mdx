@@ -1,0 +1,116 @@
+---
+title: "Guided ChatGPT Workflow for Opening Package Prep"
+sidebarTitle: "Guided in ChatGPT"
+description: "Use a clean Project Forge workspace in ChatGPT as a preparation room to compile the opening package before the real target project begins."
+---
+
+A guided ChatGPT session lets you use the AI to help close scope, classify sources, and compile opening artifacts before the real project ever starts. The Project Forge workspace acts as a controlled preparation room — a place where ambiguity is resolved and structure is built — so that the target project can open from explicit files instead of reconstructed chat memory.
+
+## The rhythm
+
+<Steps>
+  <Step title="Keep the Forge workspace clean">
+    Open a new chat or use a clearly isolated project for Project Forge preparation. Do not mix preparation work with the target project itself. If the environment allows persistent memory or chat history reference, be deliberate about disabling or isolating it. Contamination from prior sessions can make the preparation look coherent while actually pulling from unintended context.
+  </Step>
+  <Step title="Provide the Forge files">
+    Give the AI `AI_START.md` and the four canonical files in read order: `00_SCOPE.md`, `01_RULES.md`, `03_ARTIFACTS.md`, `02_PROTOCOL.md`. These are the governing surfaces. The AI reads `AI_START.md` as startup routing, then reads the canonicals for authority. Do not skip the canonicals — without them, the AI is operating on protocol alone, which can be misread as permission.
+  </Step>
+  <Step title="Describe the target project">
+    Tell the AI what target project is being prepared. Provide the objective, scope constraints, relevant source material, and expected outputs in plain language. Be explicit about what is in scope and what is out. The AI will help you close what is ambiguous, but the operator controls what counts as real input.
+  </Step>
+  <Step title="Let ChatGPT help compile the opening package">
+    Allow the AI to work through the standard flow: close the object, close the target, classify information, validate sources, assess readiness, and emit only the authorized artifacts. The AI should surface gaps, flag missing fields, and stop when ambiguity changes the move rather than filling silently past it.
+  </Step>
+  <Step title="Review the package">
+    Before using the package, review each artifact as the operator. Check that the brief reflects the actual objective and scope. Check that the SSOT contains only validated, approved material. Verify that any handoff or transfer artifact was genuinely needed. The AI builds the draft; the operator confirms what is real.
+  </Step>
+  <Step title="Open the real target project from those files">
+    Create or open the target project and start it from the opening package. The target project reads the entry point, brief, and initial SSOT as its starting ground. It does not need access to the preparation chat. If the package is complete, the target project can begin without the preparation session as hidden state.
+  </Step>
+</Steps>
+
+## What to give the AI
+
+A good startup package for the guided session contains:
+
+- `AI_START.md`
+- The four canonical files (`00_SCOPE.md`, `01_RULES.md`, `03_ARTIFACTS.md`, `02_PROTOCOL.md`)
+- Only the artifacts that actually exist for this case
+- Only the source pack you want the AI to use
+
+<Warning>
+  Do not give the AI old chats as if they were authoritative. Do not pass in hidden assumptions, mixed notes that have not been classified, or every available source "just in case." Volume creates noise before it creates clarity. Material that has not been explicitly validated should not silently enter the preparation as if it were a reliable basis.
+</Warning>
+
+## The preparation room concept
+
+Project Forge separates the work of preparation from the work of execution.
+
+- **The Project Forge workspace** is the preparation room — where scope, sources, and structure are resolved before the project begins.
+- **The target project** is the destination — the real ChatGPT project where the work happens.
+- **The opening package** is the bridge — the explicit files that allow the target project to start from a known, controlled basis instead of chat reconstruction.
+
+This separation is the core of what Project Forge does. The preparation room can be messy and iterative. The opening package it produces must be clean and explicit. The target project should never depend on the preparation room as hidden state.
+
+## Three session shapes
+
+<Note>
+  Do not mix these three modes casually. If you do, you usually create confusion about what is real state and what is only a test.
+</Note>
+
+<Tabs>
+  <Tab title="Fresh case">
+    Use this shape when you are opening a new target project from scratch and no prior artifacts exist.
+
+    **Typical inputs:**
+    - `AI_START.md`
+    - The four canonicals
+    - Explicit source materials relevant to the target project
+
+    **What to do:**
+    - Close the target and scope
+    - Validate sources
+    - Instantiate the brief and initial SSOT
+    - Assess readiness
+    - Open the target project from the resulting package
+  </Tab>
+  <Tab title="Re-entry">
+    Use this shape when the target project or preparation work already exists and you need to continue from a previous state.
+
+    **Typical inputs:**
+    - `AI_START.md`
+    - The four canonicals
+    - Existing stable artifacts for this case
+    - `HANDOFF_ARTIFACT` only if continuity genuinely cannot be reconstructed from the stable artifacts alone
+
+    **What to do:**
+    - Re-close the object to confirm the current frame
+    - Verify which artifacts still reflect current state
+    - Reject stale state explicitly rather than silently inheriting it
+    - Proceed with only what has been confirmed as current
+  </Tab>
+  <Tab title="Smoke test">
+    Use this shape when you are testing whether Project Forge itself behaves correctly, not preparing a real target project.
+
+    **Typical inputs:**
+    - `AI_START.md`
+    - The four canonicals
+    - `smoke_test/SMOKE_TEST.md`
+    - One small, simple case file
+
+    **What to do:**
+    - Run the minimum opening procedure on the test case
+    - Confirm that the output package could open a target project without the preparation chat as hidden state
+    - Do not carry test output into a real target project
+  </Tab>
+</Tabs>
+
+## Minimal operator instruction
+
+The shortest correct way to start a guided session is:
+
+```text
+Read AI_START.md, then use the Project Forge canonicals to prepare the opening package for this target project.
+```
+
+Follow this with the target description, source material, constraints, and expected outputs. The AI will use the canonicals to govern the preparation and emit only the artifacts the case actually requires.

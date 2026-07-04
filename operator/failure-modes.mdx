@@ -1,0 +1,84 @@
+---
+title: "Common Failure Modes in Project Forge Sessions Explained"
+sidebarTitle: "Failure Modes"
+description: "The six most common ways Project Forge sessions go wrong, how to recognize each one, and the corrective move that restores clean operation."
+---
+
+Most Project Forge failures are not wrong answers. They are unearned forward motion. The session looks like it is progressing — artifacts are being generated, language is coherent, the AI sounds like it understands the case — but the underlying closures that should justify that motion were never made. Object, target, and output set were not actually closed. Sources were never validated. Readiness was assumed rather than checked. The result is output that looks right but cannot be trusted. This page describes the six most common ways that happens, plus two system-level failure modes worth watching separately.
+
+## Session failure modes
+
+<AccordionGroup>
+  <Accordion title="Starting from chat momentum">
+    **What it is:** The operator already understands the case and begins writing outputs before closing the object, target, and output set through the protocol. The AI follows the momentum of the conversation rather than the structure of the canonicals.
+
+    **What it produces:** Vague artifacts with missing structure, a target project that will need to reconstruct the case from context rather than starting from an explicit package.
+
+    **Corrective move:** Return to the beginning of the protocol. Close the object — be able to state in plain language what target project is being prepared, what decision is being made now, and what outcome must exist at opening. If you cannot state those things clearly, artifact creation should not have started yet.
+  </Accordion>
+
+  <Accordion title="Treating chat as storage">
+    **What it is:** The operator acts as if state is safe because it was discussed. A constraint was mentioned, a decision was reached, a fact was confirmed — but none of it was written into an artifact. The session proceeds on the assumption that the AI will remember.
+
+    **What it produces:** Hidden dependency on memory, fake continuity that survives only as long as the session context holds. When the session is reopened or continued in a new chat, the state is gone or unreliable.
+
+    **Corrective move:** Externalize the state into the correct artifact. If the information is persistent and relevant to the target project, it belongs in the `TARGET_PROJECT_BRIEF_ARTIFACT` or `INITIAL_SSOT_ARTIFACT`. If it is temporary operational state, it belongs in the `HANDOFF_ARTIFACT` — but only if handoff is genuinely required. If it does not belong in any artifact, it belongs in `DO_NOT_STORE`, not in conversational carry-over.
+  </Accordion>
+
+  <Accordion title="Promoting too early">
+    **What it is:** Material is moved into stable basis — into the `INITIAL_SSOT_ARTIFACT` or treated as canonical-level ground — before it has been validated, and before it is clearly non-case-specific. It may be useful, it may even be correct, but it has not yet earned promotion.
+
+    **What it produces:** Noise becomes structure. Local details from one case start to look like rules. Candidate material that should have remained provisional hardens into official basis that the target project will depend on.
+
+    **Corrective move:** Keep candidate material in the `SOURCE_OR_MATERIAL_TRANSFER_ARTIFACT` until it has passed source validation and proven it is non-case-specific and normative. Promotion is conservative by design. Material must be stabilized, normative, and non-case-specific before it earns a place in the official basis.
+  </Accordion>
+
+  <Accordion title="Writing handoff by default">
+    **What it is:** The operator emits a `HANDOFF_ARTIFACT` because it feels like the safe or thorough thing to do — not because the handoff criteria have been satisfied.
+
+    **What it produces:** Duplicated continuity, stale operational state, and unnecessary surfaces that the target project or the next run must parse. When handoff is emitted every time, it stops being a meaningful signal and starts being noise.
+
+    **Corrective move:** Use handoff only when the criteria say `HANDOFF_REQUIRED` — meaning the next run would depend on state, tests, decisions, or materials that cannot be reconstructed reliably from the canonicals and already-stable artifacts alone. If the canonicals and stable artifacts are sufficient to reopen the work, handoff is not required. Do not emit it because it feels safe.
+  </Accordion>
+
+  <Accordion title="Mixing artifact roles">
+    **What it is:** The brief, initial SSOT, handoff, and transfer material are placed in one file, or the distinctions between them are treated as optional. The result is a single overloaded artifact that tries to answer too many kinds of questions.
+
+    **What it produces:** Muddy authority. The target project cannot tell what is opening shape, what is official basis, what is operational continuity, and what is candidate material. The operator cannot verify cleanly. Reopening becomes harder because the role boundaries that make artifacts legible have collapsed.
+
+    **Corrective move:** Keep artifact roles separate. The `TARGET_PROJECT_BRIEF_ARTIFACT` tells the target project what it is and what it must do. The `INITIAL_SSOT_ARTIFACT` tells it what counts as official basis at opening. The `HANDOFF_ARTIFACT` provides continuity when required. The `SOURCE_OR_MATERIAL_TRANSFER_ARTIFACT` passes along candidate material without promoting it. Each surface answers a different question. That separation is not bureaucracy — it is boundary protection.
+  </Accordion>
+
+  <Accordion title="Letting GPT improvise missing data">
+    **What it is:** A piece of information is missing — a scope boundary is undefined, a source has not been validated, a required field was left blank — and the AI fills it in because the flow "feels obvious." The gap is never surfaced. The artifact is generated as if complete.
+
+    **What it produces:** Hidden assumptions, false readiness, and unstable outputs. The target project opens based on a brief or SSOT that looks complete but contains invented content. When that content turns out to be wrong, it is difficult to trace because it was never marked as inferred or missing.
+
+    **Corrective move:** Mark missing as missing. Project Forge is designed to stop rather than improvise when critical closure is absent. If a required field cannot be filled from validated sources, it should be explicitly marked `MISSING` in the artifact. If the gap changes the current move — if the target project cannot start cleanly without that information — then the honest readiness state is `NOT_READY` or `BLOCKED`, not `READY` with a filled-in placeholder.
+  </Accordion>
+</AccordionGroup>
+
+## Also watch for: system-level failure modes
+
+Beyond session-level mistakes, two system-level failure modes can undermine Project Forge more broadly.
+
+**Canonical contamination.** This happens when case state begins to leak into the canonical files themselves. A project-specific constraint ends up in `01_RULES.md`. A one-case observation becomes embedded in `02_PROTOCOL.md`. The effect is that the protocol core becomes mixed with live project state. The canonicals become harder to trust and harder to reuse because they now carry session residue. The fix is to keep case state in artifacts where it belongs — never in canonicals.
+
+**GPT continuity illusion.** This happens when the model behaves as if it has stable, reliable continuity when it is actually interpolating from mixed sources — prior chat momentum, partial file reads, implied context, and loosely recalled earlier turns. The session sounds coherent. The outputs are generated smoothly. But the basis is mixed and cannot be audited. The effect is false confidence, incorrect basis, and subtle drift that is difficult to catch until trust in the session has already eroded. The fix is session hygiene: start from explicit files, keep the file set minimal and intentional, and watch for drift signals early.
+
+## Operator responsibilities
+
+Project Forge does not remove operator responsibility — it makes it more visible. There are things the AI is genuinely useful for, and there are things the operator must decide that the AI cannot substitute for.
+
+The operator is responsible for:
+- Deciding whether the session is a fresh case, re-entry, or smoke test
+- Deciding which materials to expose in this session and which to hold back
+- Deciding what is official enough to count as basis for the target project
+- Deciding when a target project is actually ready to be opened
+- Deciding when a session has become contaminated and should be reset
+
+<Note>
+  The AI is useful for reading canonicals correctly, classifying information, pointing out missing pieces, building authorized artifacts, and holding the protocol line. It is not a substitute for operator judgment on real authority.
+</Note>
+
+That boundary is the design. The system is built so that AI execution is meaningful precisely because operator judgment is not delegated away.

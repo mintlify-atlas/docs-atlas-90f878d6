@@ -1,0 +1,85 @@
+---
+title: "Project Forge: Prepare ChatGPT Projects from Explicit Files"
+sidebarTitle: "Introduction"
+description: "Project Forge opens ChatGPT Projects from explicit files rather than chat memory. See what it produces, what it is not, and which files govern the system."
+---
+
+Most ChatGPT workspaces give you a place to chat. Project Forge gives you a way to open a project on purpose — from explicit files, closed scope, validated sources, and frozen artifacts rather than from whatever the model happens to remember from a previous conversation.
+
+## What Project Forge does
+
+Project Forge is a **preparation system**. It does not run the target project. It prepares the target project so it can open from a visible, controlled basis instead of reconstructing scope, sources, constraints, and decisions from chat history.
+
+The system is organized around a hard boundary between two surfaces:
+
+- **The canonical core** — four governing files that define system identity, rules, artifact grammar, and working procedure. These stay general and must never contain live case state.
+- **The project package** — the external artifacts compiled for one specific target project. These carry the case.
+
+That boundary is the system. If live project state enters the core, Forge stops being clean. If the target project depends on chat memory, the opening package is not ready.
+
+Project Forge helps you close:
+
+- what project is being prepared
+- what the project must do
+- what is in scope and out of scope
+- what sources or materials count as official basis
+- what project-opening files must exist
+- whether handoff or source transfer is actually needed
+
+<Note>
+Project Forge is domain-agnostic. The system works equally well for research projects, product strategy, sports coverage, writing workspaces, and technical planning. It cares whether the project can open from explicit files — not what the project is about.
+</Note>
+
+## What Project Forge is not
+
+Understanding the non-scope is as important as understanding the scope. According to `00_SCOPE.md`, Project Forge must not become:
+
+- **A live target project** — Forge is the preparation room, not the destination
+- **A case archive** — completed or historical case material does not belong in the canonical core
+- **A long-term mixed notebook** — unclassified notes, draft ideas, and transient reasoning are not Forge artifacts
+- **A memory replacement** — Forge externalizes state into files; it does not simulate or substitute for model memory
+- **A raw source dump** — candidate material must be classified and validated before it becomes official basis
+- **A domain-shaped framework** — the core must remain general; domain-specific logic belongs in the project package, not the canonicals
+
+## The opening package
+
+The minimum useful opening package contains three files:
+
+| File / Artifact | Purpose |
+|---|---|
+| `ENTRY_POINT.md` | Tells the target project how to read the package — what each surface is for, what counts as official basis, and when to stop and ask. |
+| `TARGET_PROJECT_BRIEF_ARTIFACT` | Defines the project's objective, scope in, scope out, expected outputs, and project-specific constraints. |
+| `INITIAL_SSOT_ARTIFACT` | Freezes the initial official basis — approved sources, base constraints, and the version or date that defines the starting ground. |
+
+Two optional artifacts are added only when the case actually requires them:
+
+| Optional Artifact | Use |
+|---|---|
+| `HANDOFF_ARTIFACT` | Transfers current state when the next run cannot be reconstructed safely from the canonicals and stable artifacts alone. |
+| `SOURCE_OR_MATERIAL_TRANSFER_ARTIFACT` | Moves candidate materials to the target project without promoting them to official basis yet. |
+
+Do not generate every surface by default. A clean project opening is usually smaller than anxiety wants it to be.
+
+## Repository files
+
+The Project Forge repository contains the following files and directories:
+
+| File / Directory | Purpose |
+|---|---|
+| `AI_START.md` | Bootstrap routing file for the AI — sets startup hygiene, read order, and what not to assume. Not a canonical. |
+| `00_SCOPE.md` | Defines system identity, scope, non-scope, target, and final output. Highest authority. |
+| `01_RULES.md` | Defines criteria, authority, stability classes, residence classes, validation rules, readiness states, and handoff conditions. |
+| `02_PROTOCOL.md` | Defines the minimum working procedure, readiness states, output minimums, and stop conditions. |
+| `03_ARTIFACTS.md` | Defines artifact grammar, artifact classes, schemas, triggers, and freshness rules. |
+| `operator_guide/` | Human operating rhythm — how to set up sessions, avoid drift, and apply the system correctly. |
+| `artifact_templates/` | Startup template files for each artifact class. Help you fill required fields without inventing structure. |
+| `smoke_test/` | Minimal operational checks — use to verify that Project Forge can produce a clean opening package from explicit files. |
+
+<CardGroup cols={2}>
+  <Card title="Quickstart" icon="rocket" href="/quickstart">
+    Follow the 9-step flow to prepare your first opening package in a clean Project Forge session.
+  </Card>
+  <Card title="How It Works" icon="gear" href="/how-it-works">
+    Understand the core/state boundary, the five surfaces, and the standard 10-step working procedure.
+  </Card>
+</CardGroup>

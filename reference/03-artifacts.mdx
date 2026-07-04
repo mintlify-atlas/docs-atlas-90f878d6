@@ -1,0 +1,153 @@
+---
+title: "03_ARTIFACTS.md — Artifact Grammar and Class Definitions"
+sidebarTitle: "03_ARTIFACTS"
+description: "Canonical reference for 03_ARTIFACTS.md — highest authority on artifact surface and grammar, defining all baseline artifact classes, schemas, triggers, and custom artifact rules."
+---
+
+`03_ARTIFACTS.md` defines the grammar of all allowed external artifacts in Project Forge. It is the highest authority on artifact surface and artifact grammar. Every artifact class invoked by `02_PROTOCOL.md` must be defined here first. Artifacts carry state — the canonical core does not.
+
+<Note>
+  Not all artifacts are required every time. Emit artifacts only when authorized by the canonicals and justified by the current case. The baseline artifact classes represent what the system knows how to support — not a checklist that must be completed on every run.
+</Note>
+
+## Authority
+
+`03_ARTIFACTS.md` may define artifact-local authority. It may not redefine canonical truth, system scope, criteria, or working procedure. Its authority quadrant is strictly the artifact surface: what artifact classes exist, what they are for, how they are structured, when they are written and read, and under what conditions their content may be promoted.
+
+## Artifact authority rule
+
+Every artifact has local, delegated, subordinate authority only. No artifact may:
+
+- Redefine the system frame
+- Redefine canonical rules
+- Override the protocol
+- Create system-level authority
+
+Artifacts are external state-bearing surfaces. They may carry case state. They may not govern the system. Local artifact authority is real but bounded: it applies within the scope of the artifact's own surface and does not extend to the canonical core.
+
+## System artifact baseline
+
+Project Forge defines four baseline-supported artifact classes. If a baseline artifact class is not defined at this level, it must not be invoked by `02_PROTOCOL.md`.
+
+| Artifact | Purpose |
+|---|---|
+| `TARGET_PROJECT_BRIEF_ARTIFACT` | Minimum project-specific operational brief for the target project |
+| `INITIAL_SSOT_ARTIFACT` | Initial official basis of the target project, frozen at the point of establishment |
+| `HANDOFF_ARTIFACT` | Operational continuity across runs when reconstruction from canonicals and stable artifacts alone is unsafe |
+| `SOURCE_OR_MATERIAL_TRANSFER_ARTIFACT` | Candidate material transfer to the target project without immediate promotion to stable basis |
+
+## Artifact read order
+
+When multiple artifacts are present, read them in this order:
+
+1. `TARGET_PROJECT_BRIEF_ARTIFACT`
+2. `INITIAL_SSOT_ARTIFACT`
+3. `SOURCE_OR_MATERIAL_TRANSFER_ARTIFACT`
+4. `HANDOFF_ARTIFACT`
+
+This order ensures that project shape and official basis are established before candidate material is reviewed, and that operational continuity context from handoff is applied last — after the stable foundation is already in place.
+
+## Custom artifact rule
+
+<Warning>
+  A custom artifact is valid only if it declares all eight required fields. If any one field is missing, the custom artifact is not valid and must not be used.
+
+  Required fields for any custom artifact:
+  1. `purpose`
+  2. `authority`
+  3. `surface`
+  4. `schema`
+  5. `write_trigger`
+  6. `read_trigger`
+  7. `freshness_rule`
+  8. `artifact_specific_promotion_conditions`
+</Warning>
+
+## TARGET_PROJECT_BRIEF_ARTIFACT
+
+The `TARGET_PROJECT_BRIEF_ARTIFACT` transmits the minimum project-specific operational brief of the target project. It is not a notebook, not a protocol, and not a scope dump — it carries only the minimum required to open the target project correctly.
+
+**Authority:** Local to the target project. May not redefine the frame of Project Forge.
+
+**Surface:** Project-opening artifact for the target project.
+
+**Schema fields:**
+- `objective`
+- `scope_in`
+- `scope_out`
+- `required_outputs`
+- `project_specific_constraints`
+
+**Write trigger:** Write when documentary readiness requires a target-project brief.
+
+**Read trigger:** Read at target-project opening.
+
+**Freshness rule:** Update only when the target-project brief changes.
+
+**Artifact-specific promotion conditions:** Never promotable to system canonical.
+
+## INITIAL_SSOT_ARTIFACT
+
+The `INITIAL_SSOT_ARTIFACT` freezes the initial official basis of the target project. This is the starting ground — not a location for candidate material or working notes. Only material already validated under `01_RULES.md` may update it.
+
+**Authority:** Local to the target project. Initial reference authority for the target project's starting basis.
+
+**Surface:** Official-basis artifact.
+
+**Schema fields:**
+- `official_materials`
+- `approved_sources`
+- `base_constraints`
+- `version_or_date`
+
+**Write trigger:** Write when an initial official basis exists and must be frozen.
+
+**Read trigger:** Read immediately after `TARGET_PROJECT_BRIEF_ARTIFACT`.
+
+**Freshness rule:** Update only when the initial official basis changes.
+
+**Artifact-specific promotion conditions:** May be updated only from material already validated under `01_RULES.md`.
+
+## HANDOFF_ARTIFACT
+
+The `HANDOFF_ARTIFACT` transfers operational continuity across runs. It is intentionally temporary and intentionally non-normative. It exists for continuity, not governance. It must be written only when `02_PROTOCOL.md` closes `HANDOFF_REQUIRED` — not by default.
+
+**Authority:** Local and temporary only. Not normative.
+
+**Surface:** Operational-continuity artifact.
+
+**Schema fields:**
+- `current_state`
+- `recent_tests`
+- `open_points`
+- `next_move`
+
+**Write trigger:** Write only when `02_PROTOCOL.md` closes `HANDOFF_REQUIRED`.
+
+**Read trigger:** Read when reopening the immediately following run.
+
+**Freshness rule:** Valid only for the immediately following run unless explicitly renewed.
+
+**Artifact-specific promotion conditions:** Never promotable to canonical or SSOT.
+
+## SOURCE_OR_MATERIAL_TRANSFER_ARTIFACT
+
+The `SOURCE_OR_MATERIAL_TRANSFER_ARTIFACT` transfers candidate materials or sources to the target project without promoting them to stable basis. It solves a practical middle problem: material may be worth passing along without being validated enough to count as the opening basis.
+
+**Authority:** Local and subordinate only. Not normative until validated.
+
+**Surface:** Material-transfer artifact.
+
+**Schema fields:**
+- `candidate_materials`
+- `source_type`
+- `validation_state`
+- `attach_or_review_flag`
+
+**Write trigger:** Write when materials must pass to the target project without immediate promotion.
+
+**Read trigger:** Read after `INITIAL_SSOT_ARTIFACT` and before `HANDOFF_ARTIFACT`, if present.
+
+**Freshness rule:** Update on each materially new transfer set.
+
+**Artifact-specific promotion conditions:** Promotable only after validation under `01_RULES.md`.

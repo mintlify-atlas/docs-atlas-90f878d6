@@ -1,47 +1,135 @@
 ---
-title: "Quickstart"
-description: "Begin with a guide on the fastest path to a successful outcome"
+title: "Project Forge Quickstart: Prepare a Project in 9 Steps"
+sidebarTitle: "Quickstart"
+description: "Follow the nine steps of a Project Forge session: close scope, validate sources, compile opening artifacts, and hand a ready package to the target project."
 ---
 
-Describe how someone begins using your product. What is the first thing they need to do? Are there any prerequisites?
+By the end of this page you will have run through the complete Project Forge preparation flow: a clean session started from `AI_START.md`, the four canonicals loaded in the correct read order, a target project defined and scoped, an initial official basis closed, and a finished opening package ready to hand to the real target project — without depending on the preparation chat as hidden state.
 
-A quickstart should take someone from zero to using your product. They'll get a quick win and a sense of what they can accomplish.
-
-## Prerequisites
-
-Before you begin, you must have:
-
-- Requirement one (for example, Node.js 18+, a free account, an API key)
-- Requirement two (for example, a compatible device, a compatible browser, a compatible operating system)
-
-## Get started
+## The 9-step flow
 
 <Steps>
-  <Step title="Install">
-    Describe how to install your product or sign up.
+  <Step title="Start from a clean workspace">
+    Open a new chat or an isolated ChatGPT Project that has no prior history related to the target. Session hygiene is the foundation. If the environment can reference saved memories or previous conversations, assume contamination is possible unless you have deliberately isolated the session.
 
-    ```bash
-    npm install your-package
-    ```
+    Do not carry informal notes, previous chat snippets, or unclassified material into the Forge workspace unless you intend to classify them explicitly.
   </Step>
-  <Step title="Configure">
-    Describe any setup or configuration needed before first use.
 
-    ```bash
-    your-cli init
+  <Step title="Ask the assistant to read AI_START.md">
+    Provide `AI_START.md` to the assistant and issue the minimal operator instruction. This file bootstraps the AI into the system — it sets startup hygiene, the canonical read order, and what the assistant must not assume.
+
+    ```text
+    Read AI_START.md, then use the Project Forge canonicals to prepare the opening package for this target project.
     ```
+
+    `AI_START.md` is not a canonical. It does not introduce new rules. Its only job is to route the assistant into the canonicals correctly before any case work begins.
   </Step>
-  <Step title="Run it">
-    Show the first thing a user does to see it working.
 
-    ```bash
-    your-cli start
+  <Step title="Load the four canonicals in read order">
+    Provide the four canonical files to the assistant. Load them in this exact order:
+
+    ```text
+    00_SCOPE.md
+    01_RULES.md
+    03_ARTIFACTS.md
+    02_PROTOCOL.md
     ```
+
+    Read order is for comprehension. Precedence order for conflict resolution is `00_SCOPE.md > 01_RULES.md > 02_PROTOCOL.md > 03_ARTIFACTS.md`. No lower file may redefine a higher one.
+  </Step>
+
+  <Step title="Define the target project">
+    Describe the target project to the assistant in plain language. Close three things:
+
+    - **Objective** — what the target project is supposed to do or decide
+    - **Domain** — the subject area (research, product, sports, writing, technical, or any other)
+    - **Expected outputs** — what kinds of files, analyses, or decisions the project should produce
+
+    If you cannot state the objective clearly at this point, you are not yet ready for artifact creation. The honest state is `NOT_READY` until the object is closed.
+  </Step>
+
+  <Step title="Close scope in and scope out">
+    Work with the assistant to explicitly close what is inside the project's boundary and what is outside it. Both halves matter equally.
+
+    Unclosed scope is one of the most common causes of vague artifacts and false readiness. If scope in and scope out cannot be stated, stop here and resolve them before continuing.
+  </Step>
+
+  <Step title="Define the initial official basis">
+    Decide which sources, materials, or reference documents count as the approved starting ground for the target project. This becomes the `INITIAL_SSOT_ARTIFACT`.
+
+    Before any material can become official basis, validate:
+    - authority of the source
+    - direct relevance to the target
+    - explicit role in the project
+    - freshness when the domain is time-sensitive
+    - whether the source contradicts other approved material
+
+    Unvalidated material must stay as candidate material — it should not be promoted to official basis without passing validation.
+  </Step>
+
+  <Step title="Compile the opening artifacts">
+    Once target, scope, and official basis are closed, compile the minimum opening package:
+
+    | Artifact | What it carries |
+    |---|---|
+    | `ENTRY_POINT.md` | How to read the package; what is and is not official basis; when to stop and ask |
+    | `TARGET_PROJECT_BRIEF_ARTIFACT` | Objective, scope in, scope out, expected outputs, project-specific constraints |
+    | `INITIAL_SSOT_ARTIFACT` | Approved sources, base constraints, version or date of the initial basis |
+
+    Add a `HANDOFF_ARTIFACT` only if the next run genuinely cannot reconstruct state from the stable artifacts. Add a `SOURCE_OR_MATERIAL_TRANSFER_ARTIFACT` only if candidate material must travel to the target project without being promoted yet.
+  </Step>
+
+  <Step title="Review the package and check readiness">
+    Before opening the real target project, verify the package against the readiness gate. The system closes one of four states:
+
+    | State | Meaning |
+    |---|---|
+    | `READY` | Required gate conditions are satisfied — proceed |
+    | `NOT_READY` | Material is missing or weak, but the frame is coherent — identify and resolve gaps |
+    | `BLOCKED` | A structural condition is missing or invalid — cannot proceed until resolved |
+    | `CONFLICT` | Peer-authority surfaces diverge and cannot be closed at the current level |
+
+    Do not open the target project until the package state is `READY`. A `NOT_READY` state is normal and honest — do not paper over it with good tone.
+  </Step>
+
+  <Step title="Open the real target project from the files">
+    Create or open the real target project and load it with the opening package files — `ENTRY_POINT.md`, `TARGET_PROJECT_BRIEF_ARTIFACT`, and `INITIAL_SSOT_ARTIFACT` at minimum.
+
+    The target project must be able to start cleanly from those files **without** needing the preparation chat as hidden state. If it cannot, the opening package is not ready.
+
+    The preparation room is now done. The opening package is the bridge. The target project is the destination.
   </Step>
 </Steps>
 
-<Tip>
-  Give people a way to get help. This could be a link to a support page, a chat with a customer support agent, or a forum for your product.
+## Minimal operator instruction
 
-  Example: Need help? Reach out to us at [support@yourcompany.com](mailto:support@yourcompany.com).
+Use this as the starting prompt when beginning a guided Project Forge session:
+
+```text
+Read AI_START.md, then use the Project Forge canonicals to prepare the opening package for this target project.
+```
+
+Then provide the target, sources, constraints, and expected outputs.
+
+## Canonical read order
+
+Always load the four canonicals in this sequence. Read order is for comprehension; do not reorder it.
+
+```text
+00_SCOPE.md
+01_RULES.md
+03_ARTIFACTS.md
+02_PROTOCOL.md
+```
+
+<Warning>
+Do not start from `02_PROTOCOL.md` alone. Without frame, rules, and artifact grammar, procedure can be misread as permission. `02_PROTOCOL.md` defines the working flow, but it depends on `00_SCOPE.md` for identity, `01_RULES.md` for authority and classification, and `03_ARTIFACTS.md` for artifact grammar.
+</Warning>
+
+<Tip>
+Start smaller than you think. A clean opening package is usually smaller than anxiety wants it to be. In most cases you need one entry point, one target brief, and one initial SSOT — nothing more. If you find yourself generating every surface on every run, ask whether you are externalizing genuine need or just anxiety.
 </Tip>
+
+---
+
+Ready to understand the mechanics behind each step? Read [How Project Forge Works](/how-it-works) for the core/state boundary, the five surfaces, and the full standard procedure.

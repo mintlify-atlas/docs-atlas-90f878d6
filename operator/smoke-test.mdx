@@ -1,0 +1,124 @@
+---
+title: "Smoke Test: Validate Project Forge Behavior Before Use"
+sidebarTitle: "Smoke Test"
+description: "How to run the Project Forge smoke test, what a passing result looks like, and how to recognize failure before trusting the system on real work."
+---
+
+The smoke test checks one thing: can Project Forge produce a clean opening package from explicit files without hidden chat carry-over? It is not a full certification of the system. It is a startup test. It checks whether, given a controlled set of inputs and a simple case, the AI can produce an `ENTRY_POINT.md`, a target-project brief, and an initial SSOT that are trustworthy enough to open the target project from — without the target project needing to reconstruct anything from the preparation chat.
+
+## What you are really testing
+
+The smoke test is not about whether GPT sounds smart. A session can sound coherent and confident while secretly operating from memory, prior chat momentum, or invented context. The smoke test is designed to check the things that actually matter:
+
+- Can the AI start from the right files and respect the canonical read order?
+- Does it keep authority clean, treating templates as templates and artifacts as artifacts?
+- Does it build the minimum opening package from what is explicitly provided, without inventing missing state?
+- After the session, could the target project actually start from the generated package — without needing the preparation chat as hidden context?
+
+If the answer to the last question is no, the test did not pass, regardless of how smooth the session felt.
+
+## Files to provide
+
+For the smoke test, provide only these files — nothing more:
+
+- `AI_START.md`
+- `00_SCOPE.md`
+- `01_RULES.md`
+- `03_ARTIFACTS.md`
+- `02_PROTOCOL.md`
+- `artifact_templates/ENTRY_POINT.md`
+- `artifact_templates/TARGET_PROJECT_BRIEF_ARTIFACT.template.md`
+- `artifact_templates/INITIAL_SSOT_ARTIFACT.template.md`
+- `smoke_test/CASE_01_MINIMAL_OPENING.md`
+
+<Warning>
+  Do not add extra files "just in case". If the input pack is noisy, the test becomes harder to trust.
+</Warning>
+
+## How to run it
+
+<Steps>
+  <Step title="Start a fresh session">
+    Open a new chat or a clearly isolated ChatGPT project. Do not begin from a conversation that has accumulated context about Project Forge or about the test case. If the environment can reference saved memories or prior chats, assume contamination is possible unless you have deliberately isolated the run.
+  </Step>
+  <Step title="Provide only the test pack listed above">
+    Give the AI exactly the files named in the list above. No additional guides, no prior artifacts, no supplementary context. If the AI needs a long spoken briefing to begin correctly, the test has already lost value — that is itself a failure signal.
+  </Step>
+  <Step title="Give a short instruction">
+    Keep the opening instruction short. Something like this is sufficient:
+
+    ```text
+    Read AI_START.md, use the canonicals, use the smoke test case.
+    ```
+
+    Do not explain the whole system in your own words. If the AI starts from the wrong place after a minimal instruction, that is informative. Let it happen.
+  </Step>
+  <Step title="Watch the first move">
+    The first move is the highest-signal part of the test. The AI should route through `AI_START.md`, rebuild the canonicals in the correct order, avoid claiming hidden continuity, and understand the distinction between the package startup surface (`ENTRY_POINT.md`), the project brief, and the initial SSOT. It should not start from source material, treat templates as filled artifacts, or emit a handoff by default.
+  </Step>
+  <Step title="Ask it to build the minimum opening package">
+    Ask the AI to produce the minimum target-project package for the case:
+    - `ENTRY_POINT.md`
+    - `TARGET_PROJECT_BRIEF_ARTIFACT`
+    - `INITIAL_SSOT_ARTIFACT`
+
+    Nothing else should be required unless the run materially changes shape. A handoff artifact is not part of the minimum package for this case.
+  </Step>
+  <Step title="Judge the outcome honestly">
+    At the end, ask one question: if I open the target project from the generated package, can it begin without depending on the preparation chat as hidden state? If the answer is no, the test did not pass.
+  </Step>
+</Steps>
+
+## Case 01: Minimal Opening
+
+The smoke test uses `smoke_test/CASE_01_MINIMAL_OPENING.md` as its test case. The case is intentionally small — small enough to stay readable, real enough to expose startup mistakes.
+
+**The case:** Prepare a target project that turns rough workshop maintenance notes into a reusable recurring checklist. The target project should produce a practical output that can be reused cleanly, not theory about maintenance practices.
+
+**Why this case works as a smoke test:** It requires target closure, output closure, and the minimum opening package. It does not require web search, measurable readiness, handoff in the first run, or transfer material. It is real enough to matter but small enough not to hide system mistakes behind domain complexity.
+
+**Raw materials available in the case:**
+
+- Check tire pressure before every weekend session
+- Inspect the front suspension for visible play
+- Clean dust from the chassis after use
+- Replace damaged body clips
+- Note any steering play
+- Charge batteries the night before
+- Do not leave packs fully charged for several days
+- Keep one short field for unusual problems found during inspection
+
+**What the target project must produce:** One clean recurring checklist, one short inspection order, and one short section for unusual issues found during inspection. The output should be simple, direct, free of domain theory, limited to what the notes support, and easy to reuse every week.
+
+## What a good minimum result looks like
+
+A passing smoke test produces:
+
+- One usable `ENTRY_POINT.md` that defines how to read the package, what each surface is for, and what must not be inferred
+- One usable `TARGET_PROJECT_BRIEF_ARTIFACT` that gives the target project its objective, scope, required outputs, and constraints
+- One usable `INITIAL_SSOT_ARTIFACT` that identifies what materials count as official basis at opening
+- Explicit marking of what is still missing — gaps called out as gaps, not silently filled
+- No silent reliance on preparation-chat continuity — the target project should be able to start from the package alone
+
+The result does not need to be elegant. It needs to be clean, sufficient, and trustworthy.
+
+## Failure signals
+
+Treat the test as failed if the AI:
+
+- Pulls from previous chats or saved memory that was not in the provided file set
+- Behaves as if missing artifacts already exist — referencing them, building on them, or treating their absence as inconsequential
+- Skips `ENTRY_POINT.md` or reduces it to a brief note that does not actually define package-reading structure
+- Treats the raw source material from the case file as official basis without validation
+- Emits a `HANDOFF_ARTIFACT` without genuine need — that is, without the state being irreconstructible from canonicals and stable artifacts
+- Leaves the target project still dependent on the preparation chat as hidden state
+
+If the test fails, do not spend many turns arguing inside a contaminated session. Stop, restate the real file set, restate what does not exist yet, and restart cleanly if trust in the session is gone.
+
+## When the test passes
+
+The test has passed when the target project could be opened from the generated package without needing the preparation chat as hidden state. That is the real threshold. Everything else is secondary.
+
+<Tip>
+  The first serious use of Project Forge should be small. Use one simple case. If that works, the system is already useful.
+</Tip>

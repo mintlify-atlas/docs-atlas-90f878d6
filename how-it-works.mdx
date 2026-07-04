@@ -1,0 +1,120 @@
+---
+title: "Project Forge: How the Preparation System Is Designed"
+sidebarTitle: "How It Works"
+description: "Project Forge keeps stable protocol in the core and live case state in artifacts. Learn the five surfaces, the 10-step procedure, and the stop conditions."
+---
+
+Project Forge is built on one fundamental design principle: **protocol lives in the core; state lives in artifacts**. The four canonical files define how the system works — they are stable, general, and must never contain live case information. The project package and its artifacts carry the case — they are specific, external, and produced fresh for each target project. Keeping these two worlds separate is not a convenience; it is the system.
+
+<Note>
+Files beat memory. If something matters, put it in a file or artifact. Do not rely on the model remembering what the project was supposed to know — explicit materials are the only durable basis.
+</Note>
+
+## The core / state boundary
+
+The single most important design invariant in Project Forge is the separation between the canonical core and live case state.
+
+**The canonical core** contains the rules of the system — identity, scope, authority, classification criteria, artifact grammar, and working procedure. These files are meant to be reused across every target project without modification. They must stay general.
+
+**The project package** contains the state of one specific opening — the target brief, the initial official basis, and any transfer or handoff artifacts required for that case. This material is specific to one project and belongs in external artifacts, not in the core.
+
+Why does this matter? When case state enters the canonical core, the system becomes contaminated. The files that are supposed to be the stable, repeatable foundation start carrying case-specific assumptions. The next time you open a Project Forge session, those assumptions are still there — acting as hidden authority over a new, unrelated case. The opening package is no longer clean.
+
+The core/state boundary prevents that failure. It is enforced by the authority hierarchy: `00_SCOPE.md` is highest, and no lower surface may redefine a higher one. Runtime operator input is permitted only within fields the canonicals already authorize. Artifacts may carry local state — they may not redefine the core.
+
+## The five surfaces
+
+Project Forge separates all material into five distinct surfaces. Each is kept separate to prevent different kinds of authority from bleeding into one another.
+
+<CardGroup cols={2}>
+  <Card title="Canonical Core" icon="shield-halved">
+    The four governing files: `00_SCOPE.md`, `01_RULES.md`, `03_ARTIFACTS.md`, `02_PROTOCOL.md`. Stable, general, and reused across every project. Must never contain live case state.
+  </Card>
+  <Card title="Project Package" icon="box-open">
+    The external artifacts compiled for one target project: entry point, target brief, initial SSOT. Carries the case. Produced fresh for each opening. Does not modify the core.
+  </Card>
+  <Card title="Candidate Material" icon="folder-open">
+    Sources, notes, links, and materials that have been provided but are not yet validated or approved. Cannot become official basis without passing source validation.
+  </Card>
+  <Card title="Initial Official Basis" icon="check-circle">
+    The validated, approved starting ground for the target project. Frozen at opening via the `INITIAL_SSOT_ARTIFACT`. Only validated sources with closed authority, relevance, and role may enter this surface.
+  </Card>
+</CardGroup>
+
+| Surface | What it is | Why it is kept separate |
+|---|---|---|
+| **Canonical core** | Stable governing rules of Project Forge | Must stay general so the system is reusable; case state would corrupt it |
+| **Project package** | Opening files for one target project | Carries the specific case without modifying the rules |
+| **Candidate material** | Unvalidated sources and notes | Must not be treated as authority until it passes validation |
+| **Initial official basis** | Approved starting ground, frozen at opening | Prevents unvalidated material from acting as project authority |
+| **Handoff state** | Continuity across runs when reconstruction is unsafe | Only emitted when genuinely required — default is no handoff |
+
+## The standard flow
+
+Every Project Forge preparation session follows the same 10-step minimum working procedure, defined in `02_PROTOCOL.md`. Do not skip a step if skipping would change target, authority, readiness, or output.
+
+<Steps>
+  <Step title="Close the intake object">
+    Establish what object is actually being prepared. The real object must be unambiguous before any classification, validation, or artifact work begins.
+  </Step>
+
+  <Step title="Close the target">
+    Define the target project's objective, scope in, and scope out. All three must be stated explicitly. If any of the three is unstable, the honest state is `NOT_READY`.
+  </Step>
+
+  <Step title="Close required outputs">
+    Determine what the target project must receive at opening. Decide whether a target brief is needed, whether an initial SSOT is needed, whether handoff is needed, and whether a transfer artifact is needed.
+  </Step>
+
+  <Step title="Classify stability">
+    For each meaningful information unit, classify it as `PERSISTENT` or `VOLATILE`. This step must happen before residence is assigned — never reverse the order.
+  </Step>
+
+  <Step title="Assign residence">
+    For each classified unit, assign it to one of four residences: `CANONICAL`, `EXTERNAL_ARTIFACT`, `RUNTIME_OPERATOR_INPUT`, or `DO_NOT_STORE`. In normal use, most case-specific material belongs in `EXTERNAL_ARTIFACT`.
+
+    `DO_NOT_STORE` material must not be serialized, promoted, added to SSOT, included in handoff, or turned into stable project basis.
+  </Step>
+
+  <Step title="Validate sources">
+    Before any material can become official basis, validate authority, direct relevance, explicit role, freshness when time-sensitive, and contradiction status. No unvalidated source may become official project basis.
+  </Step>
+
+  <Step title="Test promotion eligibility when relevant">
+    Material is promotable to stable basis only if it is `stabilized`, `normative`, and `non_case_specific`. Promotion is intentionally conservative. Notes do not become rules just because they were useful once; examples do not become policy just because they were nearby.
+  </Step>
+
+  <Step title="Apply the readiness gate">
+    Close the current state as one of: `READY`, `NOT_READY`, `BLOCKED`, or `CONFLICT`. Check documentary readiness at minimum — objective, scope in, scope out, required outputs, canonical read order, stop conditions, and required artifacts. Some domains also require measurable readiness checks.
+  </Step>
+
+  <Step title="Close the handoff branch">
+    Determine whether a `HANDOFF_ARTIFACT` is genuinely required. Handoff is needed only when the next run cannot be reconstructed safely from the canonicals and stable artifacts alone. Do not emit handoff by default.
+  </Step>
+
+  <Step title="Emit authorized outputs only">
+    Generate only the artifacts authorized by the canonicals and justified by the current case. Do not create artifacts because they might be useful. Emit them because the system says they are the correct surface for this case.
+  </Step>
+</Steps>
+
+## Stop conditions
+
+Project Forge stops rather than improvising. When any of the following conditions is met, the system halts and waits for the operator to resolve the condition before continuing:
+
+- The real object is not closed
+- Authority is not closed
+- Target closure would materially change the next move
+- A lower surface is attempting to redefine a higher surface
+- A required artifact class is undefined
+- A forbidden stability-to-residence combination is being attempted
+- Immutable fields are targeted by a runtime override
+- A peer-authority conflict remains unresolved at the current level
+
+Stop conditions exist because improvising through ambiguity produces hidden assumptions that become fake authority. When the system stops, the operator sees the gap explicitly and can resolve it — rather than discovering it later when the target project is already open on unstable ground.
+
+If you encounter a stop condition, the smallest correct move is:
+
+1. identify which condition is unresolved
+2. restate the current object with the gap made explicit
+3. resolve or mark the gap before continuing
+4. if the session has become contaminated, a clean restart is often cheaper than patching trust back into it

@@ -1,0 +1,86 @@
+---
+title: "Session Setup: Starting a Project Forge Session Correctly"
+sidebarTitle: "Session Setup"
+description: "How to choose the right session type, build a clean startup pack, and avoid contaminating a Project Forge session before it begins."
+---
+
+Before you give the AI a single file, the quality of a Project Forge session is already being decided. The choices you make in the minutes before opening a chat — which session type you are running, which files you include, and whether the environment is clean — determine whether the system operates from explicit structure or quietly reconstructs context from hidden sources. This page walks through each of those choices in order.
+
+## Decide the session type first
+
+Project Forge has three normal session shapes. They are not interchangeable. Deciding which one you are running before you open the chat is the first and most important hygiene act of the session.
+
+**Fresh case** — Use this when you are opening a new target project from scratch. Nothing has been externalized yet. You are building the opening package for the first time.
+
+Typical inputs:
+- The four canonicals (`00_SCOPE.md`, `01_RULES.md`, `03_ARTIFACTS.md`, `02_PROTOCOL.md`)
+- `AI_START.md`
+- Only the explicit source materials you intend to expose
+
+**Re-entry** — Use this when preparation work already exists and you need genuine continuity with it. Artifacts have been built; you are picking up where the last run left off.
+
+Typical inputs:
+- The four canonicals
+- `AI_START.md`
+- Existing stable artifacts
+- `HANDOFF_ARTIFACT` only if continuity genuinely cannot be reconstructed from the canonicals and stable artifacts alone
+
+**Smoke test** — Use this when you are testing whether Project Forge itself behaves correctly, not when you are preparing a real case. This mode uses a controlled case file and the minimum template pack to check that the system can produce a clean opening package without inventing state.
+
+Typical inputs:
+- The four canonicals
+- `AI_START.md`
+- `smoke_test/SMOKE_TEST.md`
+- One simple case file
+- The minimum package templates: `artifact_templates/ENTRY_POINT.md`, the target brief template, and the initial SSOT template
+
+<Warning>
+  Do not mix these three modes casually. Mixing them creates confusion about what is real state and what is only a test.
+</Warning>
+
+## The correct startup pack
+
+Once you know which session type you are running, assemble the startup pack before opening the chat.
+
+<Steps>
+  <Step title="Start from a clean workspace">
+    Use a new chat or a clearly isolated ChatGPT project. Do not begin from a conversation that has already accumulated context about the case, even if it feels convenient. If the environment has saved memories or prior chat history that could be referenced, assume contamination is possible.
+  </Step>
+  <Step title="Provide AI_START.md as the first file">
+    `AI_START.md` is a bootstrap router for the AI. Its purpose is to route the AI into the canonicals, set startup hygiene, tell it what not to assume, and give it the right starting posture. Provide it first, before anything else, so the AI begins from the correct frame.
+  </Step>
+  <Step title="Provide the four canonicals in read order">
+    After `AI_START.md`, provide the canonicals in this order:
+    1. `00_SCOPE.md`
+    2. `01_RULES.md`
+    3. `03_ARTIFACTS.md`
+    4. `02_PROTOCOL.md`
+
+    This is the practical read order for rebuilding the system correctly. Do not start from `02_PROTOCOL.md` alone. Without frame, rules, and artifact grammar, procedure can be misread as permission.
+  </Step>
+  <Step title="Provide only artifacts that actually exist">
+    Include existing artifacts only if they genuinely exist and are intended to be authoritative in this session. Do not include template files as if they were filled artifacts. Templates are startup surfaces only — they do not carry authority.
+  </Step>
+  <Step title="Provide only the source material you intend to expose">
+    Include only the source materials relevant to the current session. Do not hand the AI every available file in case something turns out to be useful. Volume creates noise before it creates clarity.
+  </Step>
+</Steps>
+
+## What not to include
+
+Some inclusions look helpful but actively harm session quality. Do not provide:
+
+- **Old chats as if they were authoritative.** Prior conversation is not a canonical source. If something from an earlier session matters, it should have been externalized into an artifact first.
+- **Hidden assumptions.** If a constraint, decision, or context item has not been written down and classified, do not assume the AI will carry it forward correctly from memory or tone.
+- **Mixed unclassified notes.** Material that has not been classified as persistent or volatile, and has not been assigned a residence, is not ready to enter the session as a source. Bring it in only after classification, or hold it back.
+- **Every available source "just in case."** A longer file list is not a safer session. It is a noisier one. Bring in only what this session explicitly requires.
+
+## GPT Projects and session isolation
+
+ChatGPT Projects can carry persistent memory and chat history across sessions. This is useful in many contexts, but it is a direct hazard for Project Forge sessions that depend on explicit context control. If a project has accumulated saved memories or references to prior chats, those sources can contaminate the session without being visible in the file list.
+
+For consequential openings — where the results must be trustworthy and traceable to explicit inputs — prefer a new chat or a clearly bounded project with memory disabled or isolated. Do not assume that providing the correct files is sufficient if the environment can also pull from sources you did not provide.
+
+<Tip>
+  A good startup pack is smaller than you expect. Volume creates noise before it creates clarity.
+</Tip>

@@ -1,0 +1,79 @@
+---
+title: "System Layers: Canonical Core, Artifacts, and Support"
+sidebarTitle: "System Layers"
+description: "Project Forge organizes every surface into one of three layers — each with a distinct role, authority level, and relationship to live case state."
+---
+
+Project Forge is structured around three distinct layers. Each layer has a defined role, a defined authority level, and a clear boundary against the others. Understanding which layer a surface belongs to tells you what it can decide, what it cannot decide, and what happens when surfaces from different layers appear to conflict.
+
+## 1. The canonical core
+
+The canonical core is the authority of the system. It defines frame, criteria, artifact grammar, and working procedure. It must not hold live case state.
+
+| File | Authority |
+|---|---|
+| `00_SCOPE.md` | Highest on system frame — defines identity, scope, non-scope, target, and final output. No lower file may redefine this file. |
+| `01_RULES.md` | Highest on criteria — defines authority hierarchy, stability classes, residence classes, source validation, promotion eligibility, and readiness criteria. |
+| `03_ARTIFACTS.md` | Highest on artifact surface and artifact grammar — defines allowed artifact classes, schemas, write/read triggers, and freshness rules. |
+| `02_PROTOCOL.md` | Highest on procedure — applies the criteria already closed above; defines the standard flow, state definitions, output minimums, and stop conditions. |
+
+### Read order
+
+The canonical read order builds the system in its most legible sequence: frame first, criteria second, artifact grammar third, procedure last.
+
+```text
+00_SCOPE.md
+01_RULES.md
+03_ARTIFACTS.md
+02_PROTOCOL.md
+```
+
+### Precedence order
+
+The canonical precedence order answers a different question: when two canonical surfaces appear to conflict, which one is allowed to govern the point?
+
+```text
+00_SCOPE.md > 01_RULES.md > 02_PROTOCOL.md > 03_ARTIFACTS.md
+```
+
+Note that `03_ARTIFACTS.md` and `02_PROTOCOL.md` swap positions between the two orderings. In the read order, you read `03_ARTIFACTS.md` before `02_PROTOCOL.md` so the procedure has a defined artifact grammar to work with. In the precedence order, `02_PROTOCOL.md` outranks `03_ARTIFACTS.md` because procedural authority covers a broader question than artifact-local grammar.
+
+**The difference matters:** read order is for comprehension — it lets you build a coherent mental model of the system. Precedence is for conflict closure — it governs which surface wins when two surfaces disagree on the same point. Using one ordering for the other purpose produces confusion.
+
+## 2. Support surfaces
+
+Support surfaces help operators and AI sessions enter the system correctly. They are explanatory, orienting, or testing aids. They do not govern the system.
+
+Support surfaces include:
+
+- `AI_START.md` — bootstrap router for a new AI session; tells the model what to read, what not to assume, and when to ask the first question
+- Operator guides — translate the canonical system into human operating practice; explain how to start, what mistakes are common, and how to interpret the system in real use
+- Web compiler (`https://xxyoudeadpunkxx.github.io/GPT-PF-Chat-GPT-Project-Forge/compiler/`) — operator-facing surface for filling, reviewing, and exporting artifact surfaces
+- Smoke test materials — test whether the system produces a clean opening without leaning on hidden context
+
+<Note>
+Support surfaces do not carry authority. If a support surface conflicts with a canonical, the canonical governs. Treat any discrepancy as documentation drift in the support surface or a real issue that must be fixed upstream in the canonicals.
+</Note>
+
+## 3. Operational artifact surfaces
+
+The four baseline-supported artifact classes are the state-bearing surfaces of the system. They are external to the canonical core by design, which makes the system easier to reopen, audit, and reset.
+
+| Artifact Class | Role |
+|---|---|
+| `TARGET_PROJECT_BRIEF_ARTIFACT` | Transmits the minimum project-specific operational brief to the target project. Local to the target project. Never promotable to system canonical. |
+| `INITIAL_SSOT_ARTIFACT` | Freezes the initial official basis of the target project. Updated only from material already validated under `01_RULES.md`. |
+| `HANDOFF_ARTIFACT` | Transfers operational continuity across runs. Local and temporary only; not normative. Valid only for the immediately following run unless explicitly renewed. |
+| `SOURCE_OR_MATERIAL_TRANSFER_ARTIFACT` | Transfers candidate materials to the target project without promoting them to official basis. Promotable only after validation. |
+
+Artifacts may carry case state. They may not redefine the canonical core. Every artifact has local, delegated, subordinate authority only.
+
+## Why the split matters
+
+Keeping the three layers separate is not bureaucratic overhead — it is the mechanism that makes the system recoverable. The canonical core stays stable across every case; artifacts carry the specific state of a given preparation run; support surfaces assist entry without adding governance.
+
+When these layers collapse into each other, several failure modes become likely: case state leaks into the canonicals (contamination), artifacts are used interchangeably without role clarity (role collapse), and support surfaces begin to act as if they have governing authority they do not possess.
+
+<Warning>
+If live project state enters the canonical core, Forge stops being clean. The core defines the rules; the project package carries the state.
+</Warning>

@@ -1,0 +1,126 @@
+---
+title: "01_RULES.md — Criteria, Stability, and Validation Rules"
+sidebarTitle: "01_RULES"
+description: "Canonical reference for 01_RULES.md — closes authority hierarchy, stability and residence classification, source validation, promotion eligibility, and readiness rules."
+---
+
+`01_RULES.md` closes the stable criteria of the system. It defines the authority hierarchy, stability and residence classification, source validation requirements, promotion eligibility tests, and readiness rules that all lower files must apply. No lower file may invent new criteria — lower files apply the rules this file closes.
+
+<Warning>
+  A lower file may reference a higher rule, but may not redefine it. Reference is not decision.
+</Warning>
+
+## Authority
+
+`01_RULES.md` is highest on criteria. Lower files — `02_PROTOCOL.md` and `03_ARTIFACTS.md` — may apply these rules and reference them. They may not redefine them. If a lower file introduces autonomous criteria on a question already closed here, that constitutes a collision, not an extension.
+
+## Canonical precedence
+
+When two canonical surfaces appear to conflict on the same point, the higher surface governs. The precedence chain is:
+
+```text
+00_SCOPE.md > 01_RULES.md > 02_PROTOCOL.md > 03_ARTIFACTS.md
+```
+
+If a lower file contradicts a higher file on the same point, the lower file does not authorize that point.
+
+## Stability classes
+
+Every information unit in Project Forge is classified on the stability axis before a residence is assigned. There are exactly two stability classes:
+
+- `PERSISTENT` — the information is stable enough to persist across runs and contexts
+- `VOLATILE` — the information is not stable enough to persist; it is session-local, transient, or tied to a single run
+
+## Residence classes
+
+Residence describes where an information unit is allowed to live. There are four residence classes:
+
+- `CANONICAL` — the information lives in the canonical core files
+- `EXTERNAL_ARTIFACT` — the information lives in a controlled external artifact
+- `RUNTIME_OPERATOR_INPUT` — the information is supplied by the operator at runtime and is not persisted in a durable surface
+- `DO_NOT_STORE` — the information must not be serialized, promoted, or included in any durable surface
+
+## Allowed stability-to-residence combinations
+
+Stability constrains residence. The decision order is: classify stability first, then assign residence. The allowed and forbidden combinations are exhaustive — if a combination is not in the allowed list, it is forbidden.
+
+| Stability | Residence | Allowed |
+|---|---|---|
+| `PERSISTENT` | `CANONICAL` | ✅ |
+| `PERSISTENT` | `EXTERNAL_ARTIFACT` | ✅ |
+| `PERSISTENT` | `RUNTIME_OPERATOR_INPUT` | ✅ (exception only — see below) |
+| `PERSISTENT` | `DO_NOT_STORE` | ❌ Forbidden |
+| `VOLATILE` | `EXTERNAL_ARTIFACT` | ✅ |
+| `VOLATILE` | `RUNTIME_OPERATOR_INPUT` | ✅ |
+| `VOLATILE` | `DO_NOT_STORE` | ✅ |
+| `VOLATILE` | `CANONICAL` | ❌ Forbidden |
+
+The `PERSISTENT → RUNTIME_OPERATOR_INPUT` exception is allowed only when `operator_confirmation_required` is true — meaning the information must be explicitly reaffirmed at each run because of operational risk, explicit human responsibility, or non-delegable local choice — and no disqualifier is active. Operator preference alone does not trigger this exception and does not block promotion to `CANONICAL` or `EXTERNAL_ARTIFACT`.
+
+`DO_NOT_STORE` material must not be serialized, promoted, or enter handoff, SSOT, or any stable project basis.
+
+## Immutable fields
+
+The following fields must not be changed by runtime override or by any lower-surface action:
+
+- System identity
+- System frame
+- Authority hierarchy
+- Stability model
+- Residence model
+- Promotion model
+- Artifact grammar
+- Readiness model
+
+## Overrideable fields
+
+The following fields may change at runtime within allowed operator scope:
+
+- Current-turn objective
+- Temporary priorities
+- Temporary exclusions
+- Current materials under evaluation
+- Run-local constraints
+- Artifact choice already allowed by canonicals
+
+## Source validation criteria
+
+No unvalidated source may become official project basis. Validate sources by all five criteria:
+
+- **Authority** — the source has standing to govern the point it is being used for
+- **Direct relevance** — the source bears directly on the question or decision at hand
+- **Explicit role** — the source has been given an explicit role in the current preparation work
+- **Freshness when time-sensitive** — if the domain is time-sensitive, the source must be current enough to be reliable
+- **Contradiction status** — the source must not be in unresolved contradiction with a higher or peer-authority surface
+
+## Promotion eligibility criteria
+
+Promotion is conservative by design. Material is eligible for promotion only if all three criteria are simultaneously true:
+
+- **`stabilized`** — the content is confirmed stable by the operator, or recurs coherently across at least two cycles without contradiction and without depending on a single run
+- **`normative`** — the content authorizes, constrains, or governs downstream decisions
+- **`non_case_specific`** — the content does not depend on a single machine, anomaly, run, or temporary state
+
+If any one of these tests fails, promotion must not occur.
+
+## Readiness trigger
+
+Documentary readiness is the base gate. Measurable readiness is required — and added on top — when the target project depends on technical variables, measurable configurations, comparable states, or checks that are not only documentary.
+
+Documentary readiness requires all critical fields to be defined and none marked `MISSING`: `objective`, `scope_in`, `scope_out`, `required_outputs`, `canonical_read_order`, `stop_conditions`, and `project_opening_required_artifacts`.
+
+Measurable readiness is evaluated in two phases: observability completeness tests first (required measurable variables defined, measure units or reference method defined, missing measurements explicit), then measurable gate pass tests (required gate measures present, state comparable). If observability is closed but gate-required measures are missing, minimum outcome is `NOT_READY`. If observability itself is not closed, minimum outcome is `BLOCKED`.
+
+## Handoff criteria
+
+Handoff is not a default. The system evaluates one of three handoff outcomes:
+
+| Outcome | Condition |
+|---|---|
+| `HANDOFF_REQUIRED` | The next run would depend on state, tests, decisions, or materials that cannot be reconstructed reliably from canonicals and already-stable artifacts alone |
+| `HANDOFF_NOT_REQUIRED` | Canonicals and existing stable artifacts are sufficient to reopen the work without material operational loss |
+| `HANDOFF_FORBIDDEN` | The material is `DO_NOT_STORE`, or would redefine frame, SSOT, or canonicals |
+
+## Peer authority conflict rule
+
+Between peer-authority surfaces, no automatic precedence exists. If two peer-authority artifacts or two peer-authority validated sources diverge on the same point, the minimum outcome is `CONFLICT` until higher-surface validation or explicit revalidation closes the point. The system does not resolve peer-authority divergence through order, proximity, or confidence.

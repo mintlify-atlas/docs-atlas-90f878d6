@@ -1,0 +1,63 @@
+---
+title: "Web Compiler: Browser Surface for Package Compilation"
+sidebarTitle: "Web Compiler"
+description: "The Project Forge web compiler is a browser-based guided surface for filling opening artifacts without editing template files directly or running an AI session."
+---
+
+The web compiler is a browser-based guided surface that walks you through filling the Project Forge opening artifacts in a structured form. Instead of opening the template files directly or running a ChatGPT session to compile the package, you can use the compiler to fill the brief, initial SSOT, and related fields through a purpose-built interface that keeps required and optional surfaces visible throughout.
+
+<Card
+  title="Open the Project Forge Web Compiler"
+  icon="browser"
+  href="https://xxyoudeadpunkxx.github.io/GPT-PF-Chat-GPT-Project-Forge/compiler/"
+>
+  Browser-based guided surface for compiling the opening package.
+</Card>
+
+## What the compiler does
+
+The compiler provides a structured operator-facing surface for the artifact compilation step. Specifically, it:
+
+- Guides you through filling the `TARGET_PROJECT_BRIEF_ARTIFACT` and `INITIAL_SSOT_ARTIFACT` fields in a form-based layout
+- Keeps required fields and optional surfaces visible so you do not miss a required entry or accidentally skip an important section
+- Supports reviewing your inputs before they are committed to the draft, giving you a chance to catch gaps or contradictions before they propagate into the opening package
+- Exports a cleaner opening package that is ready to be placed into the target project
+
+The compiler does not replace the canonicals and does not introduce new rules. It is a structured way to fill the same artifact structures that the templates define.
+
+## What the compiler does not do
+
+<Warning>
+  The compiler is a support surface for artifact compilation, not an authority surface. The canonicals still govern the system. A package compiled through the browser surface carries exactly the same authority requirements as one filled manually or produced in a ChatGPT session. The compiler cannot promote unvalidated material to official basis, cannot override the canonical rules, and cannot make an incomplete or unvalidated package ready.
+</Warning>
+
+The compiler does not:
+- Replace source validation — you must still confirm that each source entered into the SSOT fields has been validated before you accept it as official basis
+- Replace readiness assessment — the compiler helps you fill fields, but the operator must assess whether the resulting package is genuinely ready
+- Replace operator judgment — decisions about scope, authority, what material to include, and whether the package is sufficient for the target project remain human responsibilities
+
+## When to use the compiler
+
+The compiler is a good fit when:
+
+- You want a guided surface rather than editing template files directly
+- You are new to Project Forge and want to see the required fields clearly before committing to a structure
+- You are filling a clean, well-understood case and want to move quickly through the required artifact fields without opening a ChatGPT session
+- You want to review and confirm each field before the draft is assembled
+
+If the project is ambiguous, the scope is still being negotiated, or the source perimeter needs to be worked out, a guided ChatGPT session may be more useful — the AI can help surface and close those ambiguities before the artifacts are filled.
+
+## Compiler vs. templates
+
+Both the compiler and the `artifact_templates/` files produce the same artifact structures. The compiler is a user interface for filling them; the templates are files you edit directly. The choice of method does not change the authority hierarchy, the required fields, or the rules that govern what can enter each artifact.
+
+| Method | How you fill the artifacts | Output |
+|---|---|---|
+| Templates | Edit files directly in `artifact_templates/` | Filled template files |
+| Web compiler | Fill a browser-based form | Exported opening package |
+| Guided ChatGPT | AI-assisted session using canonicals | AI-generated artifacts for operator review |
+| File-based agent | Agent reads files and compiles artifacts | Agent-generated artifacts for operator review |
+
+<Note>
+  The compiler does not replace source validation, readiness assessment, or operator judgment. Those remain human responsibilities regardless of which compilation method you use. A package that looks complete is not ready until the operator has confirmed that sources are validated, fields reflect real decisions, and the resulting artifacts can open the target project without the preparation session as hidden state.
+</Note>

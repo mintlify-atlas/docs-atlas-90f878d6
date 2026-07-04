@@ -1,0 +1,82 @@
+---
+title: "HANDOFF_ARTIFACT — Operational Continuity Template"
+sidebarTitle: "Handoff"
+description: "HANDOFF_ARTIFACT transfers operational continuity across runs when state cannot be safely reconstructed from canonicals and stable artifacts alone."
+---
+
+HANDOFF_ARTIFACT transfers operational continuity across runs when the next run would depend on state that cannot be safely reconstructed from canonicals and already-stable artifacts alone. It is temporary, subordinate, and scoped to exactly one run transition.
+
+## Authority
+
+HANDOFF_ARTIFACT holds authority that is local and temporary only. It is not normative. It is subordinate to the project brief and the initial SSOT. It may describe state — it may not define frame, redefine official basis, or override any higher package surface.
+
+## When to emit
+
+Emit HANDOFF_ARTIFACT only when the protocol closes `HANDOFF_REQUIRED`. The criterion is:
+
+> The next run would depend on state, tests, decisions, or materials that cannot be reconstructed reliably from canonicals and already-stable artifacts alone.
+
+If that condition is not met, handoff is either not required or explicitly forbidden.
+
+## When NOT to emit
+
+Do not emit handoff when:
+
+- **HANDOFF_FORBIDDEN** — the material is `DO_NOT_STORE`, or emission would redefine frame, SSOT, or canonicals
+- **HANDOFF_NOT_REQUIRED** — canonicals and existing stable artifacts are sufficient for the next run to open cleanly
+
+<Warning>
+  Do not emit handoff by default. Many failures come from writing handoff because it feels safe or thorough. That produces duplicated continuity, stale operational state, and unnecessary surfaces that the next run may misread as current. Use it only when the criteria say HANDOFF_REQUIRED.
+</Warning>
+
+## Schema
+
+<ParamField body="current_state" type="array">
+  What state the work is in at the end of this run. Describe the actual current position — not the intended state, not a summary of what went well. The next run reads this to know where it is picking up.
+</ParamField>
+
+<ParamField body="recent_tests" type="array">
+  Tests or checks performed during this run that are relevant to the next move. Include what was checked, what passed, and what did not. Do not pad this section — only tests that change what the next run should do belong here.
+</ParamField>
+
+<ParamField body="open_points" type="array">
+  Items that remain open and must be carried forward. These are unresolved questions, pending decisions, or incomplete steps that the next run must address. Close what you can before emitting handoff.
+</ParamField>
+
+<ParamField body="next_move" type="string">
+  The specific next action for the following run. This should be concrete enough that the next run can start from it without reconstruction. One move, stated plainly.
+</ParamField>
+
+## Write trigger
+
+Write only when `02_PROTOCOL.md` closes `HANDOFF_REQUIRED`. Do not write speculatively or as a precaution.
+
+## Read trigger
+
+Read when reopening the immediately following run. Do not carry it beyond that run unless it is explicitly renewed.
+
+## Freshness rule
+
+Valid only for the immediately following run unless explicitly renewed. A handoff artifact that has not been renewed is stale and should not be treated as current state.
+
+## Template
+
+```markdown
+# HANDOFF_ARTIFACT
+
+## current_state
+- TBD
+
+## recent_tests
+- TBD
+
+## open_points
+- TBD
+
+## next_move
+TBD
+```
+
+<Note>
+  If HANDOFF_ARTIFACT conflicts with the project brief or initial SSOT, handoff loses. Handoff may describe what happened during a run. It may not redefine what the project is or what counts as official basis. The conflict rule is unambiguous: higher package authority wins.
+</Note>

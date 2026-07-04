@@ -1,0 +1,71 @@
+---
+title: "Authority Model: How Project Forge Resolves Conflicts"
+sidebarTitle: "Authority Model"
+description: "Every surface in Project Forge carries a defined authority level. Conflict resolution, runtime overrides, and peer divergence all follow from this hierarchy."
+---
+
+Every surface in Project Forge has a defined authority level, and no lower surface may overrule a higher one. This hierarchy is not a convention — it is the mechanism the system uses to close conflicts, reject invalid overrides, and prevent lower-surface material from quietly redefining decisions that were already made above. Understanding the authority model is the prerequisite for understanding how every other part of the system behaves under pressure.
+
+## Authority hierarchy
+
+Authority closes in the following order. Each level may apply the decisions made above it. No level may redefine or contradict those decisions.
+
+1. **`00_SCOPE.md`** — closes the frame. Defines what the system is, what it is for, what it is not for, and what final output it produces. Nothing below this file may redefine system scope, non-scope, target, or final output.
+2. **`01_RULES.md`** — closes the criteria. Defines authority hierarchy, stability and residence classes, source validation, promotion eligibility, readiness criteria, and handoff criteria. Nothing below this file may invent new criteria.
+3. **`02_PROTOCOL.md`** — closes the working procedure. Applies the criteria from above; defines the standard flow, state transitions, output minimums, and stop conditions. Does not invent criteria.
+4. **`03_ARTIFACTS.md`** — closes the artifact grammar. Defines allowed artifact classes, authority levels, schemas, write and read triggers, and freshness rules. Does not decide canonical truth for the whole system.
+5. **Validated external artifacts within delegated local authority** — carry case state within the bounds defined by `03_ARTIFACTS.md`. Local and subordinate only.
+6. **Runtime operator input within allowed runtime scope** — permitted for a bounded set of overrideable fields. May not touch immutable fields.
+
+<Warning>
+Project Forge rejects the idea that freshness, confidence, or file proximity creates authority. A more recent file does not outrank an older canonical. A confident assertion does not outrank a rule. A file provided at session start does not outrank a file that governs the question being decided.
+</Warning>
+
+## Immutable vs. overrideable fields
+
+Not all fields are subject to the same protection. The authority hierarchy divides fields into two classes.
+
+| Class | Fields |
+|---|---|
+| **Immutable** — cannot be changed at runtime | System identity, system frame, authority hierarchy, stability model, residence model, promotion model, artifact grammar, readiness model |
+| **Overrideable** — may be changed at runtime | Current-turn objective, temporary priorities, temporary exclusions, current materials under evaluation, run-local constraints, artifact choice already allowed by canonicals |
+
+The immutable set defines what the system *is*. It must not change through runtime pressure, operator preference, or model momentum. The overrideable set defines how the system *operates in the current run* — local adaptation within the bounds the canonicals allow.
+
+Without this boundary, runtime convenience becomes silent protocol rewrite. The system allows local adaptation; it does not allow the operator or model to rewrite the contract through temporary pressure.
+
+## Collision rule
+
+Not every apparent tension between surfaces is a real collision. A collision exists only if one of the following conditions is true:
+
+- A lower surface introduces **autonomous criteria** on a question already closed above. If `01_RULES.md` closes the stability classification rule and `03_ARTIFACTS.md` introduces a different stability rule for a specific artifact class, that is a collision.
+- A surface **decides outside its own authority quadrant**. A canonical may define criteria. An artifact may carry state. If an artifact begins to define criteria, or if runtime input begins to redefine frame, that is a collision.
+
+When a lower-surface rule attempts to redefine a higher-surface rule, the system stops. This is a stop condition in `02_PROTOCOL.md`, not a degraded operating mode.
+
+## Peer authority conflict
+
+Between surfaces at the same authority level, no automatic precedence exists. If two peer-authority artifacts or two peer-authority validated sources diverge on the same point, the system does not resolve the tension by picking the most recent, the most confident, or the most conveniently available surface.
+
+The minimum outcome when peer-authority surfaces diverge is `CONFLICT`. The point remains suspended until one of the following closes it:
+
+- **Higher-surface validation** — a canonical surface explicitly governs the point, making one peer claim consistent and the other unauthorized
+- **Explicit revalidation** — the operator explicitly revalidates the point under the applicable criteria from `01_RULES.md`
+
+This conservative rule exists to prevent the system from pretending that order alone creates truth. Two peer-authority artifacts that disagree are genuinely in conflict, and that conflict must be held open rather than silently resolved by proximity or momentum.
+
+## Runtime overrides
+
+Runtime overrides are permitted, but only for fields that `01_RULES.md` explicitly marks as overrideable. The override mechanism is bounded by design.
+
+**What operators can change at runtime:** current-turn objective, temporary priorities, temporary exclusions, current materials under evaluation, run-local constraints, artifact choice already allowed by canonicals.
+
+**What operators cannot change at runtime:** system identity, system frame, authority hierarchy, stability model, residence model, promotion model, artifact grammar, readiness model.
+
+If a runtime override attempts to touch an immutable field:
+
+1. Do not apply the override.
+2. Set minimum system state to `CONFLICT`.
+3. Surface the governing rule that closes the question.
+
+The system does not silently absorb invalid overrides. It stops, names the conflict, and holds the point open until it is properly resolved. This is what prevents runtime convenience from becoming a side channel for protocol rewrite.

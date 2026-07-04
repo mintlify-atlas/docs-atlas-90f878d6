@@ -1,0 +1,81 @@
+---
+title: "SOURCE_OR_MATERIAL_TRANSFER_ARTIFACT — Transfer Template"
+sidebarTitle: "Source Transfer"
+description: "SOURCE_OR_MATERIAL_TRANSFER_ARTIFACT moves candidate sources to a target project without promotion to official basis — material under consideration only."
+---
+
+SOURCE_OR_MATERIAL_TRANSFER_ARTIFACT transfers candidate materials or sources to the target project without promoting them to official basis. It solves the middle problem of material worth passing along but not yet trustworthy enough to count as opening basis — keeping candidate material visible and trackable without letting it silently become authoritative.
+
+## Authority
+
+SOURCE_OR_MATERIAL_TRANSFER_ARTIFACT holds authority local and subordinate only. It is not normative until validated. It does not count as official basis by default. Material in this artifact is reference-only until explicit promotion under `01_RULES.md` is complete.
+
+## When to use
+
+Use this artifact when:
+
+- Materials must pass to the target project without immediate promotion to official basis
+- Candidate material exists that is relevant to the project but not yet validated
+- Source material needs to travel with the package for review or attachment without being treated as approved starting ground
+
+Do not use it as a substitute for INITIAL_SSOT_ARTIFACT. Material belongs here when it is under consideration, not when it is already approved.
+
+## Schema
+
+<ParamField body="candidate_materials" type="array">
+  List of candidate materials being transferred. Each entry should be specific enough that the target project can identify what it is and where it came from. Vague entries make validation harder.
+</ParamField>
+
+<ParamField body="source_type" type="string">
+  The type of source being transferred. Common values: document, prior chat excerpt, external link, operator notes, spreadsheet, image, or other. Be specific — source type affects how the target project should handle the material.
+</ParamField>
+
+<ParamField body="validation_state" type="string">
+  Current validation state of the materials. Use: `validated`, `unvalidated`, or `partially validated`. Unvalidated material must not be used as official basis. Partially validated material must be treated with the same caution as unvalidated unless the validated portion is explicitly separated.
+</ParamField>
+
+<ParamField body="attach_or_review_flag" type="string">
+  Whether materials should be attached directly to the package or reviewed before use. Use: `attach` when the material is ready to accompany the package as-is, or `review` when the target project must evaluate the material before using it.
+</ParamField>
+
+## Write trigger
+
+Write when materials must pass to the target project without immediate promotion. Do not write this artifact to bundle candidate material into the package speculatively — write it when specific materials have been identified and their transfer is deliberate.
+
+## Read trigger
+
+Read after INITIAL_SSOT_ARTIFACT and before HANDOFF_ARTIFACT, if present. This placement reflects the authority order: official basis is established first, then candidate material is introduced for consideration.
+
+## Freshness rule
+
+Update on each materially new transfer set. Do not accumulate unrelated transfers in a single artifact instance — if the set of candidate materials changes substantially, update the artifact to reflect the current transfer.
+
+## Promotion conditions
+
+Promotable to official basis only after validation under `01_RULES.md`. Validation closes authority, role, relevance, and freshness (where time-sensitive) before any material moves from candidate status to approved basis.
+
+## Template
+
+```markdown
+# SOURCE_OR_MATERIAL_TRANSFER_ARTIFACT
+
+## candidate_materials
+- TBD
+
+## source_type
+TBD
+
+## validation_state
+TBD
+
+## attach_or_review_flag
+TBD
+```
+
+<Warning>
+  Material in this artifact does not become official basis by proximity or attachment. Being present in the package does not confer approved status. Explicit promotion under `01_RULES.md` is required before any material in this artifact can become official basis for the target project.
+</Warning>
+
+<Note>
+  This artifact is distinct from INITIAL_SSOT_ARTIFACT in a deliberate way. INITIAL_SSOT_ARTIFACT holds what is already approved as official startup basis. This artifact holds what is under consideration — relevant, potentially useful, but not yet cleared. Keep them separate. Mixing approved and candidate material into the same surface makes it harder for the target project to know what it is actually allowed to treat as authoritative.
+</Note>

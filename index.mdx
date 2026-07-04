@@ -1,20 +1,59 @@
 ---
-title: "Introduction"
-description: "Welcome to your project"
+title: "Project Forge: Open ChatGPT Projects from Explicit Files"
+sidebarTitle: "Home"
+description: "Project Forge is a preparation system that lets you open ChatGPT Projects from controlled artifacts instead of relying on hidden chat memory or conversational carry-over."
 ---
 
-Write a short description of your product here. What it does, who it's for, and what they can accomplish with it.
+Project Forge gives you a deliberate, structured way to open a ChatGPT Project. Instead of hoping the model remembers your last conversation, you prepare an explicit opening package — files the target project reads at startup — so every session begins from a known, verified basis.
 
-<Tip>
-  Ready to make this your own? Start by editing this page. Update your `docs.json` file to customize your site. Then fill out the [Quickstart](/quickstart) page.
-</Tip>
+<CardGroup cols={2}>
+  <Card title="Introduction" icon="book-open" href="/introduction">
+    Understand what Project Forge is, what problem it solves, and when to use it.
+  </Card>
+  <Card title="Quickstart" icon="rocket" href="/quickstart">
+    Set up your first opening package and launch a target project in minutes.
+  </Card>
+  <Card title="Core Concepts" icon="layer-group" href="/concepts/system-layers">
+    Learn the information model, authority hierarchy, and readiness states that govern the system.
+  </Card>
+  <Card title="Operator Guide" icon="user-gear" href="/operator/session-setup">
+    Practical operating rhythm — session setup, hygiene, failure modes, and smoke testing.
+  </Card>
+</CardGroup>
 
-<Card title="Quickstart" icon="rocket" href="/quickstart">
-  This card links to the quickstart page in your project.
-</Card>
-<Card title="Components" icon="puzzle-piece" href="https://mintlify.com/docs/components">
-  Add cards, callouts, steps, tabs, and more to design and structure your pages.
-</Card>
-<Card title="Settings" icon="gear" href="https://mintlify.com/docs/organize/settings">
-  Set your site name, branding, and navigation in the `docs.json` file.
-</Card>
+## How it works
+
+Project Forge separates the system's stable rules from the per-project state it prepares. The canonical core never holds live case data — that lives in external artifacts the target project reads at startup.
+
+<Steps>
+  <Step title="Load the canonical files">
+    Provide `AI_START.md` and the four canonical files (`00_SCOPE.md`, `01_RULES.md`, `03_ARTIFACTS.md`, `02_PROTOCOL.md`) to your AI session.
+  </Step>
+  <Step title="Close the target">
+    Define the objective, scope in, and scope out for the project you want to open. This is the foundation of your opening package.
+  </Step>
+  <Step title="Compile the artifacts">
+    Generate the minimum opening package: an `ENTRY_POINT.md`, a `TARGET_PROJECT_BRIEF_ARTIFACT`, and an `INITIAL_SSOT_ARTIFACT`. Add a handoff or transfer artifact only if your case genuinely needs them.
+  </Step>
+  <Step title="Open the target project">
+    Create or open a fresh ChatGPT Project and provide the opening package. The target project starts from those files — not from remembered chat context.
+  </Step>
+</Steps>
+
+## Explore the documentation
+
+<CardGroup cols={3}>
+  <Card title="Using Project Forge" icon="hammer" href="/usage/manual">
+    Manual, guided, agent-based, and web compiler workflows.
+  </Card>
+  <Card title="Canonical Reference" icon="scroll" href="/reference/00-scope">
+    The four governing files that define scope, rules, artifacts, and protocol.
+  </Card>
+  <Card title="Artifact Templates" icon="file-lines" href="/reference/artifact-entry-point">
+    Schemas and field definitions for every artifact class.
+  </Card>
+</CardGroup>
+
+<Note>
+  Project Forge is licensed under [CC BY-SA 4.0](https://github.com/XxYouDeaDPunKxX/GPT-PF-Chat-GPT-Project-Forge/blob/main/LICENSE). It was developed with AI assistance under human direction.
+</Note>

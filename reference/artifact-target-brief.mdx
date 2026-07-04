@@ -1,0 +1,118 @@
+---
+title: "TARGET_PROJECT_BRIEF_ARTIFACT — Project Brief Template"
+sidebarTitle: "Target Brief"
+description: "TARGET_PROJECT_BRIEF_ARTIFACT carries a project-specific brief to a target project — objective, scope, required outputs, and local operating constraints."
+---
+
+TARGET_PROJECT_BRIEF_ARTIFACT transmits the minimum project-specific operational brief to the target project. It defines what the project is, what it must do, and its scope — objective, scope boundaries, required outputs, and project-specific constraints. Nothing more.
+
+## Authority
+
+TARGET_PROJECT_BRIEF_ARTIFACT holds authority local to the target project only. It may not redefine the frame of Project Forge. Inside the package it is highest on project frame and project-specific operational direction.
+
+It may define:
+
+- objective
+- scope
+- required outputs
+- project-specific constraints
+
+It may not:
+
+- redefine what counts as official basis
+- silently promote candidate material to approved basis
+- override package authority order
+
+## Schema
+
+<ParamField body="objective" type="string" required>
+  The single, primary goal of the target project. State it in one sentence. It must be specific enough to drive scope decisions.
+</ParamField>
+
+<ParamField body="scope_in" type="array" required>
+  List of what is explicitly in scope for this project. Each item should be concrete enough to be tested. Vague entries create inferred scope.
+</ParamField>
+
+<ParamField body="scope_out" type="array" required>
+  List of what is explicitly out of scope. Scope-out items prevent the project from expanding into work that was never authorized. When in doubt, state it.
+</ParamField>
+
+<ParamField body="required_outputs" type="array" required>
+  List of what the target project must produce. These are the deliverables the opening package commits to. Outputs must be consistent with scope_in and the objective.
+</ParamField>
+
+<ParamField body="project_specific_constraints" type="array" required>
+  Constraints specific to this project that govern its operation. These are not system-level rules — they are local conditions that shape what the project is allowed to do.
+</ParamField>
+
+## Write trigger
+
+Write when documentary readiness requires a target-project brief. Do not write speculatively — write when the objective, scope, and output set are sufficiently closed.
+
+## Read trigger
+
+Read at target-project opening, immediately after ENTRY_POINT.md and before INITIAL_SSOT_ARTIFACT.md.
+
+## Freshness rule
+
+Update only when the target-project brief changes. Do not touch it for continuity or to patch state — that is what HANDOFF_ARTIFACT is for.
+
+## Promotion conditions
+
+Never promotable to system canonical. This artifact is local to the target project only.
+
+## Template
+
+```markdown
+# TARGET_PROJECT_BRIEF_ARTIFACT
+
+## objective
+TBD
+
+## scope_in
+- TBD
+
+## scope_out
+- TBD
+
+## required_outputs
+- TBD
+
+## project_specific_constraints
+- TBD
+```
+
+## Example (filled)
+
+Based on CASE_01_MINIMAL_OPENING — turning rough workshop maintenance notes into a recurring checklist:
+
+```markdown
+# TARGET_PROJECT_BRIEF_ARTIFACT
+
+## objective
+Turn rough workshop maintenance notes into a reusable recurring checklist.
+
+## scope_in
+- Pre-session inspection items from operator notes
+- Battery care procedures
+- Chassis and body checks
+
+## scope_out
+- Repairs beyond inspection
+- Domain theory or technical explainers
+- Items not present in the provided notes
+
+## required_outputs
+- One clean recurring checklist
+- One short inspection order
+- One short section for unusual issues found during inspection
+
+## project_specific_constraints
+- Output must be simple, direct, and free of domain theory
+- Limited to what the provided notes support
+- Easy to reuse every week
+```
+
+<Note>
+  The target brief governs what the project is supposed to do. Keep it focused — it is not a notebook. If you find yourself adding context, background, or rationale, ask whether it belongs here or in a source material. Most of it does not belong here.
+</Note>

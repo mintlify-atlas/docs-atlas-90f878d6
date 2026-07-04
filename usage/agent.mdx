@@ -1,0 +1,82 @@
+---
+title: "Using a File-Based Agent to Compile Opening Packages"
+sidebarTitle: "With an Agent"
+description: "Use Codex, an IDE assistant, or a CLI agent to draft Project Forge opening packages directly from files, with the operator controlling source selection and final approval."
+---
+
+A file-based agent — such as Codex, an IDE assistant, or a CLI agent — can read the Project Forge canonicals and templates, receive your project information as input, and draft the opening artifacts without requiring an interactive chat session. This approach suits operators who prefer to work from a file context rather than a conversational interface, or who want the compilation step embedded in a development or automation workflow.
+
+## What the agent does
+
+When given the correct startup pack, a file-based agent:
+
+- Reads the four canonical files to establish the governing rules and artifact grammar
+- Reads `AI_START.md` for startup hygiene and routing
+- Receives the project information and source material provided by the operator
+- Works through the standard Project Forge flow: closing the object and target, classifying information, validating sources, assessing readiness, and emitting only the artifacts the case requires
+- Produces the opening package as files or structured output the operator can review before use
+
+The agent does not run the target project. Its job is the same as in any other method: produce a clean opening package that the target project can start from.
+
+## What the operator controls
+
+The operator's role does not diminish because an agent is involved. The operator is responsible for:
+
+- **Source selection** — deciding which materials are eligible inputs for this preparation
+- **Authority** — confirming which sources are allowed to count as official basis
+- **Final approval** — reviewing and confirming the opening package before using it
+- **What becomes official basis** — validating that only appropriate material enters the SSOT
+- **What must stay out** — explicitly excluding material that is not ready for promotion or that belongs in `DO_NOT_STORE`
+
+<Warning>
+  Do not let the agent turn source proximity or confidence into authority. An agent may treat material that appears nearby or frequently as if it carries weight. Authority comes from the canonicals and explicit operator validation — not from how close a source is to the request or how confidently it is stated.
+</Warning>
+
+## Startup pack for agents
+
+The startup discipline for agent sessions is the same as for human-guided sessions. Give the agent:
+
+- `AI_START.md`
+- The four canonical files (`00_SCOPE.md`, `01_RULES.md`, `03_ARTIFACTS.md`, `02_PROTOCOL.md`)
+- Only the artifacts that actually exist for this case
+- Only the source pack you intend for it to use in this preparation
+
+Do not expand the input set out of caution. Volume before clarity creates noise. If material has not been selected and validated by the operator, it should not enter the agent's working context.
+
+## Agent-specific cautions
+
+<AccordionGroup>
+  <Accordion title="Gap-filling risk">
+    Agents may silently fill missing information to preserve flow and produce a complete-looking artifact. A field that the operator left blank because the information was not yet known can arrive in the draft as if it had been resolved.
+
+    **Corrective instruction:** Instruct the agent explicitly to stop at gaps rather than fill them, and to mark any missing field as missing with a clear placeholder. A package with visible gaps is more honest and safer than a package with invisible assumptions.
+  </Accordion>
+  <Accordion title="Promotion risk">
+    Agents may treat candidate material as official basis simply because it is present in the working context. Source proximity is not authority. Candidate material that has not been validated and explicitly approved by the operator must not enter the `INITIAL_SSOT_ARTIFACT` as official basis.
+
+    **Corrective instruction:** Require explicit operator validation before any material is promoted. The agent should surface candidate material in the `SOURCE_OR_MATERIAL_TRANSFER_ARTIFACT` and flag it for operator review rather than quietly promoting it to the SSOT.
+  </Accordion>
+  <Accordion title="Handoff risk">
+    Agents may emit a `HANDOFF_ARTIFACT` by default as a precaution, treating it as a safe way to carry extra state. Handoff should only be emitted when the `HANDOFF_REQUIRED` criteria defined in the canonicals are genuinely met.
+
+    **Corrective instruction:** Instruct the agent not to emit a handoff unless the criteria are satisfied and the operator has confirmed the need. Handoff by default creates duplicated continuity, stale operational state, and unnecessary surfaces in the opening package.
+  </Accordion>
+  <Accordion title="Session contamination">
+    Agents with memory or context-persistence features may carry state from previous sessions into the current preparation. Earlier cases, prior project frames, or past source material can silently influence the current output.
+
+    **Corrective instruction:** For consequential preparation work, prefer isolated agent sessions that start from the explicit input files alone. If the agent environment supports memory features, disable or confirm their scope before beginning. Files beat memory — always prefer what you have given the agent explicitly over what it may have retained.
+  </Accordion>
+</AccordionGroup>
+
+## Do not let the agent improvise missing data
+
+The most common agent failure mode in opening package preparation is gap-filling: the agent encounters a field it cannot answer from the provided material and silently invents a plausible value rather than stopping.
+
+<Warning>
+  A package with invented fields looks ready but is not. The target project will open from false structure, and the failure will appear later as misaligned scope, missing authority, or contradicted constraints. If the agent cannot fill a field from the provided material, it must mark the gap explicitly and stop if that gap changes the target, readiness, or required outputs.
+</Warning>
+
+The correct behavior is:
+- Mark missing fields visibly with a placeholder and a note explaining what is needed
+- Stop the preparation and surface the gap to the operator when the missing information would change the objective, scope, authority, or readiness state
+- Do not substitute nearby material, confident-sounding inference, or prior session context for real operator input

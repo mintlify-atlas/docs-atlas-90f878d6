@@ -1,0 +1,106 @@
+{
+  "projectType": "general",
+  "projectName": "Project Forge",
+  "projectDescription": "A structured preparation system for opening ChatGPT Projects from explicit files and controlled artifacts instead of hidden conversational context.",
+  "theme": "luma",
+  "primaryColor": "#E85D2F",
+  "lightColor": "#F5A07A",
+  "darkColor": "#B83A10",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Guide",
+        "groups": [
+          {
+            "group": "Get Started",
+            "pages": [
+              "introduction",
+              "quickstart",
+              "how-it-works"
+            ]
+          },
+          {
+            "group": "Core Concepts",
+            "pages": [
+              "concepts/system-layers",
+              "concepts/information-model",
+              "concepts/readiness-states",
+              "concepts/authority-model"
+            ]
+          },
+          {
+            "group": "Using Project Forge",
+            "pages": [
+              "usage/manual",
+              "usage/guided-chatgpt",
+              "usage/agent",
+              "usage/web-compiler"
+            ]
+          },
+          {
+            "group": "Operator Guide",
+            "pages": [
+              "operator/session-setup",
+              "operator/session-hygiene",
+              "operator/failure-modes",
+              "operator/smoke-test"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Reference",
+        "groups": [
+          {
+            "group": "Canonical Files",
+            "pages": [
+              "reference/00-scope",
+              "reference/01-rules",
+              "reference/02-protocol",
+              "reference/03-artifacts"
+            ]
+          },
+          {
+            "group": "Artifact Templates",
+            "pages": [
+              "reference/artifact-entry-point",
+              "reference/artifact-target-brief",
+              "reference/artifact-initial-ssot",
+              "reference/artifact-handoff",
+              "reference/artifact-source-transfer"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "keyFeatures": [
+    "Explicit file-based project opening — no reliance on chat memory or conversational carry-over",
+    "Four canonical governing files defining scope, rules, artifacts, and protocol",
+    "Structured artifact system with defined schemas, write/read triggers, and freshness rules",
+    "Two-axis information model: stability classification before residence assignment",
+    "Four readiness states: READY, NOT_READY, BLOCKED, CONFLICT",
+    "Conservative promotion model preventing local material from becoming system authority",
+    "Guided web compiler for browser-based artifact compilation",
+    "Domain-agnostic design works for research, product, sports, writing, or technical projects",
+    "Smoke test suite for validating system behavior before consequential work",
+    "AI_START.md bootstrap file for correct AI session startup"
+  ],
+  "publicApiSurface": [
+    "AI_START.md — AI session bootstrap router",
+    "00_SCOPE.md — system identity, scope, and final output definition",
+    "01_RULES.md — canonical criteria: stability, residence, validation, promotion, readiness",
+    "02_PROTOCOL.md — minimum working procedure and state machine",
+    "03_ARTIFACTS.md — artifact grammar, schemas, triggers, and freshness rules",
+    "TARGET_PROJECT_BRIEF_ARTIFACT — artifact: objective, scope_in, scope_out, required_outputs, constraints",
+    "INITIAL_SSOT_ARTIFACT — artifact: official_materials, approved_sources, base_constraints, version_or_date",
+    "HANDOFF_ARTIFACT — artifact: current_state, recent_tests, open_points, next_move",
+    "SOURCE_OR_MATERIAL_TRANSFER_ARTIFACT — artifact: candidate_materials, source_type, validation_state, attach_or_review_flag",
+    "ENTRY_POINT.md — package startup routing and interpretation surface",
+    "Web compiler — https://xxyoudeadpunkxx.github.io/GPT-PF-Chat-GPT-Project-Forge/compiler/",
+    "Readiness states: READY, NOT_READY, BLOCKED, CONFLICT",
+    "Stability classes: PERSISTENT, VOLATILE",
+    "Residence classes: CANONICAL, EXTERNAL_ARTIFACT, RUNTIME_OPERATOR_INPUT, DO_NOT_STORE",
+    "Handoff criteria: HANDOFF_REQUIRED, HANDOFF_FORBIDDEN, HANDOFF_NOT_REQUIRED"
+  ]
+}

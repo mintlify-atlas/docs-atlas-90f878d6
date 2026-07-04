@@ -1,0 +1,86 @@
+---
+title: "Build an Opening Package Manually with Project Forge"
+sidebarTitle: "Manual"
+description: "Fill the Project Forge artifact templates yourself for maximum control over scope, sources, constraints, and expected outputs when your project is small or already clear."
+---
+
+The manual method puts every decision directly in your hands. Instead of using an AI session or the web compiler to guide the process, you open the template files, fill in the fields, and produce the opening package yourself. This approach is best when the project is already well-understood and you want exact control over what enters each artifact.
+
+## When to use this method
+
+The manual method works best when you:
+
+- Already know the objective, scope, and expected outputs before you sit down
+- Have a clear source perimeter and know which materials count as official basis
+- Are working on a small or contained project where guided compilation would add overhead without adding clarity
+- Want maximum control over what enters each field and prefer not to negotiate scope with an AI session
+- Need to produce a clean package quickly from a well-understood situation
+
+If the project is ambiguous, the scope is still contested, or the source perimeter is unclear, a guided session in ChatGPT or the web compiler will surface those gaps more reliably than filling templates alone.
+
+## Templates
+
+The template files live in the `artifact_templates/` directory of the Project Forge repository. These are the five surfaces available:
+
+| Template file | Purpose |
+|---|---|
+| `ENTRY_POINT.md` | Configures how the target project reads the opening package |
+| `TARGET_PROJECT_BRIEF_ARTIFACT.template.md` | Defines objective, scope, required outputs, and project-specific constraints |
+| `INITIAL_SSOT_ARTIFACT.template.md` | Freezes the initial official basis: approved materials, sources, and base constraints |
+| `HANDOFF_ARTIFACT.template.md` | Transfers current run state when continuity cannot be reconstructed safely |
+| `SOURCE_OR_MATERIAL_TRANSFER_ARTIFACT.template.md` | Carries candidate materials to the target project without promoting them to official basis |
+
+The templates are startup surfaces only. They help you cover required fields and stay close to the artifact grammar. They do not create authority by themselves — authority still comes from the canonicals.
+
+## Filling the templates
+
+<Steps>
+  <Step title="Fill ENTRY_POINT.md">
+    Start with the entry point. This file tells the target project how to interpret the opening package. Configure the package read order, identify what each surface is for, define what counts as official basis, and specify what must not be inferred. The entry point is a package-reading guide, not a brief or a second SSOT.
+  </Step>
+  <Step title="Fill TARGET_PROJECT_BRIEF_ARTIFACT">
+    Define the operational shape of the target project. Complete the following fields:
+    - **objective** — what the target project is and must do
+    - **scope_in** — what is explicitly inside the project boundary
+    - **scope_out** — what is explicitly excluded
+    - **required_outputs** — what the project must produce or deliver at close
+    - **project_specific_constraints** — any constraints that apply specifically to this project and are not already covered by the canonicals
+
+    Keep the brief tight. Do not use it as a notebook or a place to store candidate material.
+  </Step>
+  <Step title="Fill INITIAL_SSOT_ARTIFACT">
+    Freeze the initial official basis of the target project. Fill in:
+    - **official_materials** — which materials count as official at opening
+    - **approved_sources** — which sources are approved for use
+    - **base_constraints** — constraints that apply to the starting ground
+    - **version_or_date** — the version or date that defines the basis
+
+    Validate each entry before it goes in. No unvalidated source may become official project basis. Keep candidate material out of this surface — use the transfer artifact for anything that has not yet earned promotion.
+  </Step>
+  <Step title="Add HANDOFF_ARTIFACT only when continuity truly requires it">
+    Add the handoff artifact only when the next run of the target project cannot be safely reconstructed from the canonicals and stable artifacts alone. The `HANDOFF_REQUIRED` criteria are defined in the canonicals — do not emit handoff by default. If you find yourself writing a handoff out of habit or as a precaution, stop and check whether the criteria are actually met.
+  </Step>
+  <Step title="Add SOURCE_OR_MATERIAL_TRANSFER_ARTIFACT only when candidate material must travel">
+    Add the transfer artifact when candidate materials need to reach the target project without being promoted to official basis yet. Each entry should identify the material, its type, its validation status, and whether it should be attached or only reviewed. Do not use this surface as a substitute for the SSOT.
+  </Step>
+</Steps>
+
+## The minimum pack
+
+One entry point, one target brief, and one initial SSOT is usually enough. Add the handoff only when continuity genuinely requires it. Add the transfer artifact only when candidate material must travel without promotion.
+
+| Surface | Required? |
+|---|---|
+| `ENTRY_POINT.md` | Always |
+| `TARGET_PROJECT_BRIEF_ARTIFACT` | Always |
+| `INITIAL_SSOT_ARTIFACT` | Always |
+| `HANDOFF_ARTIFACT` | Only when `HANDOFF_REQUIRED` criteria are met |
+| `SOURCE_OR_MATERIAL_TRANSFER_ARTIFACT` | Only when candidate material must travel without promotion |
+
+<Tip>
+  If you find yourself generating every surface every time, slow down and ask whether you are externalizing genuine need or just anxiety.
+</Tip>
+
+<Note>
+  The [web compiler](https://xxyoudeadpunkxx.github.io/GPT-PF-Chat-GPT-Project-Forge/compiler/) provides a browser-based guided surface for filling the same artifact structures. If you prefer a structured form over editing files directly, or if you are new to Project Forge, the compiler produces the same artifact output without requiring you to open the template files manually.
+</Note>

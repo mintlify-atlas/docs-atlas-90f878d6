@@ -1,0 +1,186 @@
+---
+title: "ENTRY_POINT.md — Package Startup Routing Template"
+sidebarTitle: "Entry Point"
+description: "ENTRY_POINT.md is the startup surface of a target-project package, setting read order, inference limits, and stop conditions before project work begins."
+---
+
+ENTRY_POINT.md is the startup surface of a target-project package. It defines how to read the package before any project work begins — establishing read order, inference limits, and startup stop conditions so the target project opens from explicit structure rather than reconstructed context.
+
+## Role and authority
+
+ENTRY_POINT.md holds the highest authority inside the package on package interpretation routing. It governs:
+
+- how the package must be read
+- what each package surface is for
+- what counts as official basis
+- what does not count as official basis
+- what must not be inferred
+- when to stop and ask
+
+It is not the project brief. It is not the official basis. It does not replace the content of the package surfaces it points to. It exists to route interpretation correctly before any project content is engaged.
+
+ENTRY_POINT.md is highest on: package read order, package surface interpretation, inference limits, startup stop conditions, and package-local conflict handling.
+
+It may **not** define:
+
+- project-specific objective
+- project-specific scope
+- project-specific outputs
+- approved sources
+- official materials
+- run-specific continuity
+
+Lower package surfaces may add detail within their role. They may not redefine a higher package surface. If a lower surface conflicts with a higher one, the lower surface does not authorize that point.
+
+## What ENTRY_POINT.md must contain
+
+A valid ENTRY_POINT.md must define each of the following:
+
+- **How the package must be read** — explicit read order across all surfaces present in the package
+- **What each package surface is for** — a clear role statement for every surface the package includes
+- **What counts as official basis** — official startup basis is limited to `INITIAL_SSOT_ARTIFACT.md` and any material explicitly named there as official
+- **What does not count as official basis** — reference-only material: `SOURCE_OR_MATERIAL_TRANSFER_ARTIFACT.md`, attached or linked source materials, runtime operator remarks not explicitly approved, and remembered chat continuity
+- **What must not be inferred** — the full inference limits list (see [Inference limits](#inference-limits) below)
+- **When to stop and ask** — the startup stop conditions that block proceeding (see [Stop conditions](#stop-conditions) below)
+
+## What ENTRY_POINT.md must NOT contain
+
+<Warning>
+  ENTRY_POINT.md must not contain any of the following. If a line answers a project-specific question, it does not belong here — it belongs in the appropriate downstream surface.
+
+  - Project-specific objective
+  - Project-specific scope
+  - Project-specific outputs
+  - Approved sources for the project
+  - Official materials for the project
+  - Runtime continuity
+  - Project-specific exceptions or decisions
+  - Project-specific rationale that belongs in the brief or SSOT
+
+  Apply the contamination test: if a line answers *what is this specific project*, *what is in scope*, *what outputs are required*, *what sources are approved*, *what counts as official basis*, or *what changed in this run* — it does not belong in ENTRY_POINT.md.
+</Warning>
+
+## Package interpretation authority order
+
+Package interpretation authority closes in this order:
+
+1. `ENTRY_POINT.md`
+2. `TARGET_PROJECT_BRIEF_ARTIFACT.md`
+3. `INITIAL_SSOT_ARTIFACT.md`
+4. `HANDOFF_ARTIFACT.md` (if present)
+5. `SOURCE_OR_MATERIAL_TRANSFER_ARTIFACT.md` (if present)
+6. Attached or linked source materials (if present)
+7. Runtime operator input explicitly provided in the current session
+
+This order applies to package read order, package surface interpretation, inference limits, startup stop conditions, and package-local conflict handling. It does not make ENTRY_POINT.md highest on project-specific content — that authority lives in the brief and SSOT.
+
+## Template
+
+```markdown
+# ENTRY_POINT
+
+## Role
+This file is the startup entry point for the target project package.
+
+Use it to interpret the package correctly before doing any project work.
+
+This file is not the project brief.
+This file is not the official basis.
+This file does not replace the content of the package surfaces it points to.
+
+Its job is to:
+- define how the package must be read
+- define what each package surface is for
+- define what counts as official basis
+- define what does not count as official basis
+- define what must not be inferred
+- define when to stop and ask
+
+## Package Interpretation Authority
+Package interpretation authority closes in this order:
+1. `ENTRY_POINT.md`
+2. `TARGET_PROJECT_BRIEF_ARTIFACT.md`
+3. `INITIAL_SSOT_ARTIFACT.md`
+4. `HANDOFF_ARTIFACT.md`, if present
+5. `SOURCE_OR_MATERIAL_TRANSFER_ARTIFACT.md`, if present
+6. attached or linked source materials, if present
+7. runtime operator input explicitly provided in the current session
+
+## Read Order
+Read the package in this order:
+1. `ENTRY_POINT.md`
+2. `TARGET_PROJECT_BRIEF_ARTIFACT.md`
+3. `INITIAL_SSOT_ARTIFACT.md`
+4. `HANDOFF_ARTIFACT.md`, if present
+5. `SOURCE_OR_MATERIAL_TRANSFER_ARTIFACT.md`, if present
+6. attached or linked source materials, if present
+
+## Official Basis Rule
+Inside the package, official startup basis is limited to:
+- `INITIAL_SSOT_ARTIFACT.md`
+- any material explicitly named there as official
+
+## Reference-Only Rule
+The following are reference-only unless explicitly promoted:
+- `SOURCE_OR_MATERIAL_TRANSFER_ARTIFACT.md`
+- attached or linked source materials
+- runtime operator remarks not explicitly approved as basis
+- remembered chat continuity
+
+## Inference Limits
+Do not infer any of the following unless explicitly present:
+- missing objective
+- missing scope boundaries
+- missing required outputs
+- missing official basis
+- missing source approval
+- missing artifact existence
+- missing runtime decisions
+
+## Stop Conditions
+Stop before proceeding if:
+- `TARGET_PROJECT_BRIEF_ARTIFACT.md` is missing
+- `INITIAL_SSOT_ARTIFACT.md` is missing
+- the brief is incomplete in a way that changes scope or output
+- the SSOT is incomplete in a way that changes official basis
+- package surfaces conflict on a material point
+- only reference-only material exists for a point that requires official basis
+- attached sources exist but approval state is not closed where required
+- the package tries to rely on missing artifacts as if they existed
+```
+
+## Inference limits
+
+The following must not be inferred unless explicitly present in the package:
+
+- Missing objective
+- Missing scope boundaries
+- Missing required outputs
+- Missing official basis
+- Missing source approval
+- Missing artifact existence
+- Missing runtime decisions
+
+The following must not be used as inference sources:
+
+- Prior chat continuity
+- Assumed project history
+- Likely intent inferred from tone
+- Nearby candidate material
+
+If information is missing, treat it as missing. Do not replace missing structure with inference.
+
+## Stop conditions
+
+Stop before proceeding if any of the following is true:
+
+- `TARGET_PROJECT_BRIEF_ARTIFACT.md` is missing
+- `INITIAL_SSOT_ARTIFACT.md` is missing
+- The brief is incomplete in a way that changes scope or output
+- The SSOT is incomplete in a way that changes official basis
+- Package surfaces conflict on a material point
+- Only reference-only material exists for a point that requires official basis
+- Attached sources exist but approval state is not closed where approval is required
+- The package tries to rely on missing artifacts as if they existed
+
+When stopped, ask. The missing information rule applies: stop and ask if the missing information changes what the project is, what it is allowed to do, what counts as official basis, what output is required, or whether work can start safely. Proceed conservatively only when the missing information does not change startup authority, startup basis, or startup scope.

@@ -1,0 +1,103 @@
+---
+title: "Readiness States: READY, NOT_READY, BLOCKED, CONFLICT"
+sidebarTitle: "Readiness States"
+description: "Project Forge replaces vibe-based readiness with a formal gate that produces one of four states, each with defined output requirements and next-move rules."
+---
+
+Project Forge doesn't use a vibe-based assessment of readiness — it applies a formal gate with four possible outcomes. Each outcome has a defined meaning, a defined minimum output, and defined next-move rules. The system assigns a state because the state determines what happens next, not because it needs to characterize how things feel.
+
+## The four states
+
+<CardGroup cols={2}>
+  <Card title="READY" icon="circle-check">
+    All required gate conditions for the current opening decision are satisfied. This does not mean everything in the universe is known — it means the current gate is closed. The target project can proceed from the current package.
+  </Card>
+  <Card title="NOT_READY" icon="circle-half-stroke">
+    The frame and procedure remain coherent, but required material is still missing or weak. This is a normal operating state, not a failure. It should not be smoothed over or treated as a temporary condition to bypass.
+  </Card>
+  <Card title="BLOCKED" icon="octagon-xmark">
+    A structural condition is missing, invalid, or unavailable, and the flow cannot continue safely until it is resolved. Blocked states are not incremental deficiencies — they represent a path that cannot be taken safely from where the system currently stands.
+  </Card>
+  <Card title="CONFLICT" icon="triangle-exclamation">
+    Incompatible claims remain open at the current authority level and cannot be closed without higher-surface validation or explicit revalidation. Conflict cannot be resolved by tone, confidence, or momentum.
+  </Card>
+</CardGroup>
+
+<Note>
+NOT_READY is a normal state. Do not be afraid of it. A well-run preparation session will pass through NOT_READY cleanly, close the missing items, and arrive at READY with an honest basis.
+</Note>
+
+## Documentary readiness
+
+Documentary readiness is the base gate. It asks whether the opening package is closed enough on paper to authorize target-project opening. All of the following critical fields must be present and non-`MISSING`:
+
+- `objective` — defined and singular
+- `scope_in` — defined
+- `scope_out` — defined
+- `required_outputs` — defined
+- `canonical_read_order` — defined
+- `stop_conditions` — defined
+- `project_opening_required_artifacts` — defined
+
+If the frame is coherent but any critical field is absent or marked `MISSING`, the minimum state is `NOT_READY`. If a required artifact class is undefined or a forbidden condition is the only apparent path forward, the minimum state is `BLOCKED`.
+
+## Measurable readiness
+
+Measurable readiness is activated only when the target project depends on technical variables, measurable configurations, comparable states, or non-documentary checks. It is not applied by default.
+
+When the measurable readiness trigger is active, the system applies two phases in sequence:
+
+**Phase 1 — Observability completeness tests:**
+- Required measurable variables are explicitly named (`required_measurable_variables_defined`)
+- A unit or reference method exists to make measures comparable (`measure_units_or_reference_method_defined`)
+- Any missing measure that affects the gate is explicitly marked missing (`missing_measurements_explicit`)
+
+**Phase 2 — Measurable gate pass tests (applied only after Phase 1 closes):**
+- All gate-required measures are present (`required_gate_measures_present`)
+- The captured state is comparable to other states, setups, or runs in the same domain (`state_comparable`)
+
+**Outcome rules:** If observability is closed but gate-required measures are missing, minimum state is `NOT_READY`. If observability itself is not closed — method, units, or comparability are absent — minimum state is `BLOCKED`. The system separates "can we describe the measurable state honestly?" from "is the measurable state sufficient to pass the gate?" Explicitly marked missing data is better than hidden missing data, but it does not automatically satisfy the gate.
+
+## Output minimums per state
+
+Each state has a defined set of required output fields. Outputs outside these minimums are not authorized unless already permitted by the canonicals.
+
+<Accordion title="READY — required outputs">
+  All four of the following fields must be present in a READY output:
+
+  - `readiness_basis` — the explicit basis on which the gate was satisfied
+  - `authorized_next_move` — the specific next action the system authorizes from this state
+  - `artifacts_to_read` — the artifacts the target project must read at opening
+  - `artifacts_to_emit` — the artifacts that must be produced or confirmed before opening
+</Accordion>
+
+<Accordion title="NOT_READY — required outputs">
+  All four of the following fields must be present in a NOT_READY output:
+
+  - `missing_items` — explicit list of what is absent and must be supplied
+  - `weak_items` — items that are present but not sufficiently closed to satisfy the gate
+  - `blocking_or_non_blocking` — whether each gap blocks forward motion or only degrades quality
+  - `minimum_next_move` — the smallest action that would meaningfully advance toward READY
+</Accordion>
+
+<Accordion title="BLOCKED — required outputs">
+  All three of the following fields must be present in a BLOCKED output:
+
+  - `blocking_cause` — the specific structural condition that cannot be resolved from the current position
+  - `governing_owner` — the surface or authority level that owns resolution of the block
+  - `minimum_unblock_move` — the specific action required to clear the blocking condition
+</Accordion>
+
+<Accordion title="CONFLICT — required outputs">
+  All five of the following fields must be present in a CONFLICT output:
+
+  - `conflicting_sources` — the specific surfaces or claims that are in incompatible tension
+  - `resolution_rule_applied` — the canonical rule that governs how this class of conflict is handled
+  - `suspended_point` — the specific decision or claim being held open
+  - `minimum_unblock_move` — the action required to close the conflict at the appropriate authority level
+  - `peer_authority_status` — whether the conflict involves peer-authority surfaces, and what the current revalidation state is
+</Accordion>
+
+<Warning>
+Do not smooth over CONFLICT with good tone or momentum. Conversational systems are effective at sounding continuous even when incompatible claims remain unresolved. The CONFLICT state exists precisely to hold those points open until they are closed by the right authority.
+</Warning>

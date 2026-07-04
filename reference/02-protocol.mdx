@@ -1,0 +1,134 @@
+---
+title: "02_PROTOCOL.md — Working Procedure and State Machine"
+sidebarTitle: "02_PROTOCOL"
+description: "Canonical reference for 02_PROTOCOL.md — defines the minimum working procedure, state machine, intake requirements, stop conditions, and output minimums for Project Forge."
+---
+
+`02_PROTOCOL.md` defines the minimum working procedure of Project Forge. It applies criteria already closed in `01_RULES.md` and artifact grammar already closed in `03_ARTIFACTS.md`. It cannot redefine either. The protocol's role is to sequence action correctly, not to invent new rules or extend the authority of lower surfaces.
+
+<Warning>
+  Do not skip a step if the skipped step would change target, authority, readiness, or output.
+</Warning>
+
+<Note>
+  Read `02_PROTOCOL.md` after `03_ARTIFACTS.md` when artifact grammar is required for the current move. The canonical read order places `03_ARTIFACTS.md` before `02_PROTOCOL.md` precisely so that artifact definitions are available when the protocol applies them.
+</Note>
+
+## Authority
+
+`02_PROTOCOL.md` is highest on procedure. It applies the criteria already closed above it — it does not re-close them. This file may not redefine criteria, the system frame, or artifact grammar. Its authority is strictly procedural: it sequences the application of rules that have already been decided upstream.
+
+## State definitions
+
+The protocol operates with four states. Every run closes in exactly one state.
+
+| State | Meaning |
+|---|---|
+| `READY` | All required gate conditions for the current opening decision are satisfied |
+| `NOT_READY` | Required material is still missing or weak, but the frame and procedure remain coherent |
+| `BLOCKED` | A structural condition is missing, invalid, or unavailable — the flow cannot continue safely |
+| `CONFLICT` | Two or more surfaces produce incompatible claims that cannot be closed at the current authority level |
+
+## Standard flow
+
+The standard flow has ten steps. They must be executed in order. A step may not be skipped if skipping it would change target, authority, readiness, or output.
+
+<Steps>
+  <Step title="Close intake object">
+    Close what target project is being prepared, what opening decision is being made, what materials are already present, what remains external, and what runtime constraints apply now. If intake does not close the real object, stop before classification.
+  </Step>
+  <Step title="Close target">
+    Close `objective`, `scope_in`, and `scope_out`. If target closure remains unstable, minimum state is `NOT_READY`.
+  </Step>
+  <Step title="Close required outputs">
+    Close `required_outputs`, whether project-opening artifacts are required, and whether handoff evaluation is required. If required outputs cannot be named, minimum state is `NOT_READY`.
+  </Step>
+  <Step title="Classify stability">
+    For each relevant information unit, classify as `PERSISTENT` or `VOLATILE`. Do not assign residence before stability is closed enough. If stability cannot be closed safely, minimum state is `NOT_READY`.
+  </Step>
+  <Step title="Assign residence">
+    For each classified information unit, apply the allowed stability-to-residence mapping from `01_RULES.md`. Reject forbidden combinations. Choose the most conservative valid residence when tension exists. If a forbidden combination is the only apparent path, minimum state is `BLOCKED`.
+  </Step>
+  <Step title="Validate sources">
+    Apply source validation criteria from `01_RULES.md`. Unvalidated material must not become official basis.
+  </Step>
+  <Step title="Test promotion eligibility when relevant">
+    Apply promotion in order: validate input material, test `stabilized`, test `normative`, test `non_case_specific`, then emit only the artifact or canonical consequence already allowed above. If one test fails, do not promote.
+  </Step>
+  <Step title="Apply readiness gate">
+    Apply the documentary readiness criteria from `01_RULES.md`. Verify that critical fields are present, no critical field is `MISSING`, the canonical read order is closed, and project opening required artifacts are defined when required. Apply measurable readiness only when the trigger from `01_RULES.md` is active — observability completeness tests first, then measurable gate pass tests.
+  </Step>
+  <Step title="Close handoff branch">
+    Apply the handoff criteria from `01_RULES.md`. Emit `HANDOFF_ARTIFACT` only if `HANDOFF_REQUIRED`. Do not emit if `HANDOFF_NOT_REQUIRED`. If `HANDOFF_FORBIDDEN`, output `forbidden_reason`, `governing_rule`, `required_disposition`, and `minimum_safe_next_move`.
+  </Step>
+  <Step title="Emit authorized outputs only">
+    Emit only the outputs authorized by the state reached and the canonicals. Do not emit outputs because they feel useful. Outputs are constrained by state — see output minimums by state below.
+  </Step>
+</Steps>
+
+## Intake
+
+At intake, close all five items before proceeding to classification:
+
+- What target project is being prepared
+- What opening decision is being made
+- What materials are already present
+- What remains external
+- What runtime constraints apply now
+
+If intake does not close the real object, stop before classification. Proceeding past an unclosed intake object is one of the most common sources of downstream state error.
+
+## Stop conditions
+
+Stop immediately if any of the following conditions is present:
+
+- The real object is not closed
+- Authority is not closed
+- Target closure changes the move materially
+- A lower-surface rule attempts to redefine a higher-surface rule
+- A required artifact class is undefined
+- A forbidden stability-to-residence combination is attempted
+- Immutable fields are targeted by runtime override
+- Peer-authority conflict remains unresolved
+
+Stop conditions are control mechanisms, not inconveniences. In conversational systems, many errors come from unearned forward motion rather than wrong answers. The protocol stops precisely to prevent that.
+
+## Output minimums by state
+
+Each state requires a minimum set of outputs. Emitting less than the minimum is not permitted.
+
+<Accordion title="READY — output minimums">
+  When the state is `READY`, emit at minimum:
+
+  - `readiness_basis` — the specific gate conditions that were satisfied and how they were satisfied
+  - `authorized_next_move` — the move that is authorized given the current readiness state
+  - `artifacts_to_read` — the artifacts the target project must read at opening
+  - `artifacts_to_emit` — the artifacts authorized for emission in this preparation run
+</Accordion>
+
+<Accordion title="NOT_READY — output minimums">
+  When the state is `NOT_READY`, emit at minimum:
+
+  - `missing_items` — the items that are absent and required for the gate to pass
+  - `weak_items` — the items that are present but insufficiently closed or validated
+  - `blocking_or_non_blocking` — whether the missing or weak items are blocking forward motion
+  - `minimum_next_move` — the smallest move that would change the state
+</Accordion>
+
+<Accordion title="BLOCKED — output minimums">
+  When the state is `BLOCKED`, emit at minimum:
+
+  - `blocking_cause` — the structural condition that prevents the flow from continuing
+  - `governing_owner` — the authority surface or owner that governs the blocked point
+  - `minimum_unblock_move` — the smallest move that would unblock the flow
+</Accordion>
+
+<Accordion title="CONFLICT — output minimums">
+  When the state is `CONFLICT`, emit at minimum:
+
+  - `conflicting_sources` — the specific sources or surfaces that are in incompatible conflict
+  - `resolution_rule_applied` — the rule from `01_RULES.md` that governs how this conflict type must be resolved
+  - `suspended_point` — the specific decision or claim that is held open
+  - `minimum_unblock_move` — the smallest move that would close the conflict
+  - `peer_authority_status` — whether the conflicting surfaces are peer-authority or hierarchically ordered, and what that means for resolution
+</Accordion>

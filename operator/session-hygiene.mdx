@@ -1,0 +1,96 @@
+---
+title: "Session Hygiene: Maintaining Clean Context in ChatGPT"
+sidebarTitle: "Session Hygiene"
+description: "How to keep Project Forge sessions grounded in explicit files, recognize when context has drifted, and recover cleanly when it has."
+---
+
+Project Forge is built entirely on explicit context. Every decision the system makes is supposed to trace back to files you provided, artifacts that were built, or source material you classified and validated. GPT systems, however, are very good at sounding continuous even when that continuity is implicit, partial, or contaminated. A session can look like it is working from your files while it is actually drawing on remembered tone, prior chat momentum, or loosely recalled earlier decisions. This page explains how to keep that from happening and what to do when it already has.
+
+## The main hygiene rule
+
+The single most important hygiene rule in Project Forge is straightforward: files beat memory.
+
+<Note>
+  If something matters in a Project Forge session, it must be in a file or artifact. Do not trust memory of an earlier answer, a vague sense that "the model already knows," or prior chat continuity. Trust canonicals, provided artifacts, and validated source material.
+</Note>
+
+This is not a limitation of the system — it is the design. Project Forge is built to make the difference between what is known, what is inferred, and what is missing visible and explicit. When you rely on conversational carry-over instead of files, that visibility disappears.
+
+## Drift: what it looks like
+
+Drift means the AI is no longer operating from the explicit current package. It may still sound coherent and helpful. That is what makes it dangerous. Typical drift signals:
+
+- The AI brings in facts or examples from previous chats you did not provide in this session
+- The AI acts as if an artifact exists when it does not — referencing it, building on it, or treating its contents as settled
+- The AI speaks as if the state is already known even though it was never externalized into a file or artifact
+- The AI answers from chat momentum instead of from the canonicals and the provided artifacts
+- The AI resolves ambiguity without asking when the ambiguity should have changed the current move
+
+Each of these signals means the session has begun operating from sources other than the ones you authorized. The sooner drift is caught, the cheaper it is to correct.
+
+## What to do when drift appears
+
+The goal of drift correction is to restore explicit context with the smallest reset that actually works. Do not try to correct drift from inside the drift — arguing with a session that is already drawing from wrong sources adds more contamination.
+
+<Steps>
+  <Step title="Do not argue with the drift inside the drift">
+    Engaging with a drifting response as if it were correct — negotiating, refining, or elaborating — anchors the session more deeply to the contaminated state. Stop engaging with the content of the drift immediately.
+  </Step>
+  <Step title="Stop the current move">
+    Interrupt whatever the AI was doing. Do not continue the thread or ask for a revised version of a response that came from contaminated context.
+  </Step>
+  <Step title="Restate the current object">
+    Clearly restate what target project is being prepared, what decision is being made right now, and what the current move is supposed to accomplish.
+  </Step>
+  <Step title="Restate what files are authoritative in this session">
+    Name the specific files the AI should be operating from. This is especially important if the session has been running for a while and the file list has become implicit.
+  </Step>
+  <Step title="Restate what does not exist">
+    Explicitly name artifacts, sources, or decisions that do not exist in this session. If the AI treated something as existing when it does not, saying so directly is necessary — not just implied.
+  </Step>
+  <Step title="Reopen in a cleaner chat or project if needed">
+    If the above steps do not restore clean context, or if the session has been running on contaminated basis for several turns, a fresh session is the right call. Trust in the current context is more valuable than preserving session continuity.
+  </Step>
+</Steps>
+
+<Warning>
+  If the session has clearly become contaminated, a clean restart is often cheaper than patching trust back into it.
+</Warning>
+
+## Contamination sources
+
+Drift does not happen randomly. It typically comes from one of these sources:
+
+- **Saved memories.** ChatGPT memory can persist facts, preferences, and prior decisions across sessions. If saved memories reference the case you are working on, they can silently supply context you did not authorize.
+- **Chat history reference.** If the session or project can access prior chats, the AI may treat those conversations as background context even when you intend it to work only from the current file set.
+- **Default project continuity.** ChatGPT Projects accumulate context over time by design. In a context where that accumulation is not reset or isolated, the AI may carry forward state from earlier project interactions.
+- **Assuming the model already knows the case.** This is an operator habit, not a platform feature. If you brief the AI partially because you expect it to fill in the rest from prior interactions, you have introduced contamination deliberately. The AI should always work from explicit inputs, not from what it "already knows."
+
+## Preferred practices
+
+<CardGroup cols={2}>
+  <Card title="Prefer Clean Starts" icon="sparkles">
+    For consequential work, open a new chat or a clearly isolated project. Do not build on sessions that have already accumulated implicit context about the case.
+  </Card>
+  <Card title="Minimize Hidden Memory" icon="eye-slash">
+    When you need a clean run, be careful with saved memories, chat history reference, and default project continuity. If the environment can reference prior sessions, assume contamination is possible.
+  </Card>
+  <Card title="Files Beat Memory" icon="file-check">
+    If something matters — a constraint, a decision, a validated fact — put it in a file or artifact. Do not trust conversational carry-over to preserve it accurately across moves or sessions.
+  </Card>
+  <Card title="Start From Explicit Inputs" icon="list-check">
+    Every session should begin from a named, intentional file set: `AI_START.md`, the four canonicals, only the artifacts that actually exist, and only the source material you intend to expose.
+  </Card>
+</CardGroup>
+
+## Verified vs. inferred vs. missing
+
+One of the most important distinctions in a clean session is between information that has been verified, information that has been inferred, and information that is genuinely missing. These three states must not be blended.
+
+**Verified** means it was in a file you provided, it came from a validated source, or it was explicitly confirmed through the protocol. It can be treated as basis.
+
+**Inferred** means the AI derived it from other verified material. It may be correct, but it carries less authority than directly verified content. It must not be promoted silently to verified status just because the inference seemed obvious.
+
+**Missing** means the information was not provided, was not in any authorized source, and has not been established through validation. Missing data must be marked explicitly. A gap that is clearly marked as missing is far better than a gap that was silently filled by inference or momentum.
+
+Keeping these three states distinct is how Project Forge prevents false readiness. An artifact that silently combines verified content, unchecked inference, and filled-in gaps is not a trustworthy opening package — even if it reads well.

@@ -1,0 +1,80 @@
+---
+title: "INITIAL_SSOT_ARTIFACT — Official Basis Template"
+sidebarTitle: "Initial SSOT"
+description: "INITIAL_SSOT_ARTIFACT freezes the initial official basis of the target project, defining what sources and materials count as approved starting ground."
+---
+
+INITIAL_SSOT_ARTIFACT freezes the initial official basis of the target project. It defines what sources and materials count as approved starting ground — what the project is allowed to treat as official basis at startup, what base constraints apply, and what version or date anchors that basis.
+
+## Authority
+
+INITIAL_SSOT_ARTIFACT holds authority local to the target project only. It is the initial reference authority for the target project's starting basis. Inside the package it is highest on what counts as approved startup basis.
+
+It may define:
+
+- official materials
+- approved sources
+- base constraints
+- startup basis version or date
+
+It may not:
+
+- absorb candidate material by proximity alone
+- override the project brief
+- treat transfer material as approved basis without explicit promotion
+
+## Schema
+
+<ParamField body="official_materials" type="array">
+  List of materials that count as official at opening. Only materials explicitly named here are part of the official starting basis. Attachment alone does not confer official status.
+</ParamField>
+
+<ParamField body="approved_sources" type="array">
+  List of sources that are approved for use in the target project. Sources not listed here are not approved — they may be transferred via SOURCE_OR_MATERIAL_TRANSFER_ARTIFACT but do not become approved basis by being present.
+</ParamField>
+
+<ParamField body="base_constraints" type="array">
+  Constraints that apply to all work in the target project at the level of official basis. These are not the same as project-specific constraints in the brief — they govern what the official basis permits.
+</ParamField>
+
+<ParamField body="version_or_date" type="string">
+  The version or date that defines this basis. Used to anchor the SSOT to a specific point in time or a specific revision, so freshness and update triggers are unambiguous.
+</ParamField>
+
+## Write trigger
+
+Write when an initial official basis exists and must be frozen. Do not write speculatively — official materials and approved sources must be settled before this artifact is emitted.
+
+## Read trigger
+
+Read immediately after TARGET_PROJECT_BRIEF_ARTIFACT. The brief defines what the project must do; this artifact defines what it is allowed to treat as official basis while doing it.
+
+## Freshness rule
+
+Update only when the initial official basis changes. Do not use this artifact to carry candidate material or passing notes — that belongs in SOURCE_OR_MATERIAL_TRANSFER_ARTIFACT.
+
+## Promotion conditions
+
+May be updated only from material already validated under `01_RULES.md`. Validation is required before any material can move from candidate status into the official basis defined here.
+
+## Template
+
+```markdown
+# INITIAL_SSOT_ARTIFACT
+
+## official_materials
+- TBD
+
+## approved_sources
+- TBD
+
+## base_constraints
+- TBD
+
+## version_or_date
+TBD
+```
+
+<Warning>
+  The initial SSOT governs what the project is allowed to treat as official basis at startup. Do not put candidate material here — use SOURCE_OR_MATERIAL_TRANSFER_ARTIFACT for materials awaiting validation. Material does not become official basis by being present in the package or listed anywhere other than this artifact.
+</Warning>

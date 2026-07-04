@@ -1,0 +1,95 @@
+---
+title: "Information Model: Stability, Residence, and Promotion"
+sidebarTitle: "Information Model"
+description: "Project Forge classifies every piece of information on two axes — stability and residence — before deciding where it lives and whether it can be promoted."
+---
+
+Project Forge classifies every piece of information on two axes before deciding where it lives. The first axis is stability: is this information stable enough to persist across runs? The second axis is residence: where is it allowed to live? These axes are related but not identical, and the order in which you apply them is enforced by the system.
+
+## Stability classes
+
+Project Forge recognizes two stability classes, defined in `01_RULES.md`:
+
+**PERSISTENT** — information that is stable enough to persist across runs and contexts without contradicting itself. Persistent information may govern downstream decisions, recur coherently, or represent confirmed stable choices. It is a candidate for canonical, artifact, or (in narrow cases) runtime residence.
+
+**VOLATILE** — information that is session-local, transient, run-specific, or not yet confirmed stable. Volatile information may not enter canonical surfaces. It belongs in artifacts, runtime input, or the `DO_NOT_STORE` sink depending on its role.
+
+## Residence classes
+
+Project Forge recognizes four residence classes:
+
+**CANONICAL** — the highest-durability residence. Only `PERSISTENT` information belongs here. Canonical surfaces define the frame, criteria, grammar, and procedure of the system. They must not hold case state or volatile material.
+
+**EXTERNAL_ARTIFACT** — a durable but subordinate residence. Artifacts may carry persistent or volatile case state. They are external to the core, which is what makes the system auditable and resettable.
+
+**RUNTIME_OPERATOR_INPUT** — information that is provided in the current session rather than pre-serialized. May hold persistent information only through a narrow explicit exception (see below). Commonly holds volatile material such as current-turn objectives, temporary constraints, and materials under active evaluation.
+
+**DO_NOT_STORE** — a sink classification. Material classified here must not be serialized, promoted, or included in any output surface. This residence class prevents temporary reasoning, unsafe fragments, and session-only residue from leaking into durable surfaces.
+
+## The stability-to-residence rule
+
+Stability and residence are decided in strict order:
+
+1. Classify stability first.
+2. Assign residence second.
+
+Stability constrains residence. Stability does not determine residence by itself — residence also depends on authority, role, and operational consequence. But you must close stability before you assign residence, because residence assigned before stability is closed creates fake order.
+
+<Warning>
+Never reverse the order: classify stability first, then assign residence. Assigning residence too early creates fake order.
+</Warning>
+
+### Allowed and forbidden combinations
+
+| Stability | Residence | Status |
+|---|---|---|
+| PERSISTENT | CANONICAL | Allowed |
+| PERSISTENT | EXTERNAL_ARTIFACT | Allowed |
+| PERSISTENT | RUNTIME_OPERATOR_INPUT | Allowed (exception only) |
+| VOLATILE | EXTERNAL_ARTIFACT | Allowed |
+| VOLATILE | RUNTIME_OPERATOR_INPUT | Allowed |
+| VOLATILE | DO_NOT_STORE | Allowed |
+| VOLATILE | CANONICAL | **Forbidden** |
+| PERSISTENT | DO_NOT_STORE | **Forbidden** |
+
+This table is exhaustive. If stability and residence pull in different directions, choose the most conservative residence that still respects authority. When the only apparent path is a forbidden combination, the minimum system state is `BLOCKED`.
+
+## DO_NOT_STORE
+
+`DO_NOT_STORE` is not just a label. It is a sink. Material classified as `DO_NOT_STORE` must not be:
+
+- serialized into any output
+- promoted to a higher or more durable residence
+- entered into SSOT or initial basis
+- entered into a handoff artifact
+- treated as stable project basis at any point
+
+This is how the system prevents temporary reasoning, unsafe fragments, and session-only residue from contaminating durable surfaces. If material would otherwise require a forbidden combination, the correct disposition is `DO_NOT_STORE` paired with minimum state `BLOCKED`, not a creative residence assignment.
+
+## Source validation
+
+Before material can become official project basis, it must pass source validation. The validation criteria from `01_RULES.md` are:
+
+- **Authority** — the source has the standing to govern the relevant decision
+- **Direct relevance** — the material applies directly to the case at hand
+- **Explicit role** — the source's role in the opening package is explicitly defined
+- **Freshness** — when the material is time-sensitive, recency is confirmed
+- **Contradiction status** — the source does not contradict a higher-authority or already-validated surface
+
+No unvalidated source may become official project basis. The system does not treat "sounds plausible" or "we discussed it earlier" as validation. The validation step exists to prevent accidental basis formation, chat-to-basis leakage, and stale source promotion.
+
+## Promotion
+
+Promotion is the act of moving material to a more authoritative or durable residence. It is deliberately conservative. Material is eligible for promotion only if all three criteria are satisfied:
+
+**Stabilized** — the content is confirmed stable by the operator, or it recurs coherently across at least two cycles without contradiction and without depending on a single run. One useful instance is not stabilization.
+
+**Normative** — the content authorizes, constrains, or governs downstream decisions. Descriptive or contextual material that does not govern anything is not normative and is not eligible for promotion regardless of how stable it appears.
+
+**Non-case-specific** — the content does not depend on a single machine, anomaly, run, or temporary state. Material that is useful in one case but tied entirely to that case's specifics does not meet this criterion.
+
+If any one of the three criteria fails, the material must not be promoted. This is conservative by design — without this barrier, notes drift into rules, examples drift into policy, and one useful case pattern becomes fake general law.
+
+<Tip>
+The `PERSISTENT -> RUNTIME_OPERATOR_INPUT` exception is intentionally hard to trigger. It requires the information to carry non-delegable operator responsibility, explicit local choice, or operational risk that makes silent carry-forward dangerous. Operator preference alone, or habitual repetition, is not sufficient — those do not block promotion to `CANONICAL` or `EXTERNAL_ARTIFACT` residence.
+</Tip>
